@@ -1,0 +1,47 @@
+<resources>
+    <string name="app_name">ServiTec</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Sistema de Control de Servicios</string>
+    <string name="nav_header_subtitle">jdiaz010196@gmail.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Ajustes</string>
+
+    <string name="menu_home">Inicio</string>
+    <string name="menu_gallery">Equipos</string>
+    <string name="menu_slideshow">Servicios</string>
+    <string name="action_logout">Cerrar Sesión</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="btn_equipo_text">Guardar</string>
+    <string name="txt_hint_code_equipo">Código</string>
+    <string name="txt_label_btn_equipo">Buscar</string>
+    <string name="hint_nombre_equipo">Ingrese Nombre Común</string>
+    <string name="hint_dependencia_equipo">Ingrese Dependencia</string>
+    <string name="hint_modelo_equipo">Ingrese Modelo</string>
+    <string name="hint_marca_equipo">Ingrese Marca</string>
+    <string name="hint_sn_equipo">Ingrese Número de Serie</string>
+    <string name="hint_color_equipo">Ingrese Color</string>
+    <string name="hint_estado_equipo">Ingrese Estado del equipo</string>
+    <string name="hint_notas_equipo">Ingrese Notas</string>
+    <string name="label_edit_equipos_btn">Editar</string>
+
+    <string name="ingrese_notas">Ingrese Notas</string>
+    <string name="ingresar_id_del_componente">Ingresar ID del Componente</string>
+    <string name="eliminar">Eliminar</string>
+    <string name="c_digo">Código</string>
+    <string name="registrar_servicio">Registrar</string>
+    <string name="ingrese_servicio_realizado">Ingrese Servicio Realizado</string>
+    <string name="ingrese_estado_del_equipo">Ingrese Estado del equipo</string>
+    <string name="ingrese_color">Ingrese Color</string>
+    <string name="ingrese_n_mero_de_serie">Ingrese Número de Serie</string>
+    <string name="ingrese_marca">Ingrese Marca</string>
+    <string name="ingrese_modelo">Ingrese Modelo</string>
+    <string name="ingrese_dependencia">Ingrese Dependencia</string>
+    <string name="ingrese_nombre_com_n">Ingrese Nombre Común</string>
+    <string name="bienvenido">BIENVENIDO</string>
+    <string name="usuario_login">Usuario</string>
+    <string name="ingresar_login">Ingresar</string>
+    <string name="contrasena_login">Contraseña</string>
+    <string name="imagen_login">IMAGEN</string>
+</resources>
