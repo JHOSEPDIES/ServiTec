@@ -15,6 +15,7 @@ public interface serviciosTec {
     @GET("buscar_Equipos.php")
     Call<List<responseEquipos>> getequipos();
 
+
     @FormUrlEncoded
     @POST("guardar_componente.php")
     Call<String> guardarEquipo(

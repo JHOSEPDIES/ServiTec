@@ -68,24 +68,13 @@ public class AddFragment extends Fragment {
     private void guardarDatos()
     {
         pb.setVisibility(View.VISIBLE);
-        //Url del servicio,sin el endpoint
         final  String url = "https://tecdies.com.mx/TECDIES_ANDROID/";
-
-        //creamos Gson builder
         Gson gson = new GsonBuilder().setLenient().create();
-
-        //Creamos el objeto Retrofit
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)//Indicamos la url del servicio
-                .addConverterFactory(GsonConverterFactory.create(gson) ) //Agregue la fábrica del convertidor para la serialización y la deserialización de objetos.
-                .build();//Cree la instancia de Retrofit utilizando los valores configurados.
-
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create(gson) )
+                .build();
         serviciosTec service = retrofit.create(serviciosTec.class);
-
-        //Recuerda que debemos colocar el modo en como obtenemos esa respuesta,en este caso es una lista de objetos
-
-        //pero puede ser simplemente un objeto.
-        //indicamos el metodo que deseamos ejecutar
         Call<String> response = service.guardarEquipo("Gamin","Comunicacion",
                 "Tower HP","HP", "S/N","Negra","Regular","S/Nt"
                 );
@@ -103,7 +92,6 @@ public class AddFragment extends Fragment {
                     Toast.makeText(requireActivity(), "Error en el EndPoint", Toast.LENGTH_SHORT).show();
                 }
             }
-
             @Override
             public void onFailure(Call<String> call, Throwable t) {
                 pb.setVisibility(View.INVISIBLE);
