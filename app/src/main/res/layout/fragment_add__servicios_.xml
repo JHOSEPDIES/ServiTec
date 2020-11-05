@@ -30,7 +30,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_marginEnd="18dp"
                         android:inputType="number"
-                        android:id="@+id/txt_code"
+                        android:id="@+id/txt_code_servicios"
                         android:layout_width="220dp"
                         android:layout_height="wrap_content"
                         android:hint="@string/txt_hint_code_equipo"
@@ -43,7 +43,7 @@
 
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_find"
+                    android:id="@+id/btn_find_servicios"
                     android:layout_marginStart="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -144,29 +144,15 @@
                 </com.google.android.material.textfield.TextInputEditText>
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/estado_servicios"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="12dp"
-                    android:layout_marginTop="20dp"
-                    android:hint="@string/ingrese_estado_del_equipo">
-
-                </com.google.android.material.textfield.TextInputEditText>
-            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/done_servicio"
+                    android:id="@+id/trabajo_servicio"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="120dp"
                     android:layout_margin="12dp"
                     android:layout_marginTop="20dp"
                     android:hint="@string/ingrese_servicio_realizado">
@@ -180,7 +166,7 @@
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_guardar"
+                    android:id="@+id/btn_guardar_servicio"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="12dp"
@@ -192,5 +178,12 @@
         </LinearLayout>
 
     </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/pb_add_servicio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="invisible"/>
 
 </FrameLayout>

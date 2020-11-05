@@ -99,20 +99,15 @@ public class Lista_Equipos_Fragment extends Fragment {
     private void callEquipos()
     {
         pb.setVisibility(View.VISIBLE);
-        //Url del servicio,sin el endpoint
         final  String url = "https://tecdies.com.mx/TECDIES_ANDROID/";
-        //Creamos el objeto Retrofit
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)//Indicamos la url del servicio
-                .addConverterFactory(GsonConverterFactory.create() ) //Agregue la fábrica del convertidor para la serialización y la deserialización de objetos.
-                .build();//Cree la instancia de Retrofit utilizando los valores configurados.
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create() )
+                .build();
 
         serviciosTec service = retrofit.create(serviciosTec.class);
 
-        //Recuerda que debemos colocar el modo en como obtenemos esa respuesta,en este caso es una lista de objetos
-
-        //pero puede ser simplemente un objeto.
-        Call<List<responseEquipos>> response = service.getequipos();//indicamos el metodo que deseamos ejecutar
+        Call<List<responseEquipos>> response = service.getequipos();
 
         response.enqueue(new Callback<List<responseEquipos>>() {
             @Override
@@ -124,11 +119,11 @@ public class Lista_Equipos_Fragment extends Fragment {
                     {
                         equipos = new ArrayList<>();
 
-                        for (responseEquipos elemento : response.body())//realizamos un foreach para recorrer la lista
+                        for (responseEquipos elemento : response.body())
                         {
                             equipos.add(new responseEquipos("Nombre: "+elemento.getNombre(), "Dependencia: "+elemento.getDependencia(), "Modelo: "+elemento.getModelo(),
                                     "Marca: "+elemento.getMarca(), "SN: "+elemento.getSn(), "Color: "+elemento.getColor(),
-                                    "Estado: "+elemento.getEstado()));
+                                    "Estado: "+elemento.getEstado(),"Notas:"+elemento.getNotas()));
                         }
                         showList(equipos);
 

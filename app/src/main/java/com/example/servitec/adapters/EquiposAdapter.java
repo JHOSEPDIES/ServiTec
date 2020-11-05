@@ -42,8 +42,7 @@ public class EquiposAdapter extends RecyclerView.Adapter<EquiposAdapter.EquiposV
         holder.ns.setText(equipo.getSn());
         holder.color.setText(equipo.getColor());
         holder.estado.setText(equipo.getEstado());
-
-
+        holder.notas.setText(equipo.getNotas());
     }
 
     @Override
@@ -53,11 +52,11 @@ public class EquiposAdapter extends RecyclerView.Adapter<EquiposAdapter.EquiposV
 
     public static class EquiposViewHolder extends RecyclerView.ViewHolder
     {
-        private TextView nombre,dependencia,modelo,marca,ns,color,estado;
-
+        private TextView nombre,dependencia,modelo,marca,ns,color,estado,notas;
 
         public EquiposViewHolder(@NonNull View itemView) {
             super(itemView);
+
             nombre = itemView.findViewById(R.id.tv_nombre);
             dependencia = itemView.findViewById(R.id.tv_dependencia);
             modelo = itemView.findViewById(R.id.tv_modelo);
@@ -65,6 +64,7 @@ public class EquiposAdapter extends RecyclerView.Adapter<EquiposAdapter.EquiposV
             ns = itemView.findViewById(R.id.tv_ns);
             color = itemView.findViewById(R.id.tv_color);
             estado = itemView.findViewById(R.id.tv_estado);
+            notas = itemView.findViewById(R.id.tv_notas);
 
         }
     }

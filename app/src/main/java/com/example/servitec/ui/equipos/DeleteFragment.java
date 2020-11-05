@@ -2,59 +2,50 @@ package com.example.servitec.ui.equipos;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.servitec.Interfaces.serviciosTec;
 import com.example.servitec.R;
+import com.example.servitec.clases.responseEquipos;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link DeleteFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class DeleteFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private ProgressBar pb;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private Button btn_eliminar;
+
+    private EditText tv_codigo;
 
     public DeleteFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment DeleteFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static DeleteFragment newInstance(String param1, String param2) {
-        DeleteFragment fragment = new DeleteFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -62,5 +53,107 @@ public class DeleteFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_delete, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        pb = requireActivity().findViewById(R.id.pb_delete);
+
+        btn_eliminar = requireActivity().findViewById(R.id.btn_delete);
+
+        tv_codigo = requireActivity().findViewById(R.id.txt_code_delete);
+
+        btn_eliminar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!tv_codigo.getText().toString().equals(""))
+                {
+                    eliminarEquipo(tv_codigo.getText().toString());
+                }
+                else
+                {
+                    showToast("¡No deja Campos Vacios!");
+                }
+            }
+        });
+
+    }
+
+    private void eliminarEquipo(String id)
+    {
+        pb.setVisibility(View.VISIBLE);
+        final  String url = "https://tecdies.com.mx/TECDIES_ANDROID/";
+        Gson gson = new GsonBuilder().setLenient().create();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create(gson) )
+                .build();
+
+        serviciosTec service = retrofit.create(serviciosTec.class);
+
+        Call<String> response = service.eliminarEquipo(id);
+
+        response.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (response.isSuccessful() && response.code() == 200 && response.body().equals("1"))
+                {
+                    try
+                    {
+                        showToast("¡Equipo Eliminado Correctamente!");
+                        pb.setVisibility(View.INVISIBLE);
+                        cleanContainer();
+                    }catch (Exception e)
+                    {
+                        showToast("Error en el EndPoint");
+                        pb.setVisibility(View.INVISIBLE);
+                        cleanContainer();
+                    }
+                }
+                else
+                {
+                    showToast("¡No Existe Equipo!");
+                    pb.setVisibility(View.INVISIBLE);
+                    cleanContainer();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                showToast(t.toString());
+                pb.setVisibility(View.INVISIBLE);
+                cleanContainer();
+            }
+        });
+
+
+    }
+
+    private void showToast(String mensaje)
+    {
+        LayoutInflater inflater = getLayoutInflater();
+
+        View layout = inflater.inflate(R.layout.custom_toast, requireActivity().findViewById(R.id.layout_toast));
+
+        TextView txt_mensaje = layout.findViewById(R.id.txt_mensaje);
+
+        txt_mensaje.setText(mensaje);
+
+        Toast toast = new Toast(requireActivity());
+
+        toast.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL,0,0);
+
+        toast.setDuration(Toast.LENGTH_SHORT);
+
+        toast.setView(layout);
+
+        toast.show();
+    }
+
+    private void cleanContainer()
+    {
+        tv_codigo.setText("");
     }
 }

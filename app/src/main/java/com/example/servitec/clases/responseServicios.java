@@ -1,29 +1,19 @@
 package com.example.servitec.clases;
 
-public class responseEquipos {
+public class responseServicios {
 
-    String nombre,dependencia,modelo,marca,sn,color,estado,notas;
+    String nombre,dependencia,modelo,marca,sn,color;
 
-    public responseEquipos() {
+    public responseServicios() {
     }
 
-    public responseEquipos( String nombre, String dependencia, String modelo, String marca, String sn, String color, String estado,String notas) {
+    public responseServicios(String nombre, String dependencia, String modelo, String marca, String sn, String color) {
         this.nombre = nombre;
         this.dependencia = dependencia;
         this.modelo = modelo;
         this.marca = marca;
         this.sn = sn;
         this.color = color;
-        this.estado = estado;
-        this.notas = notas;
-    }
-
-    public String getNotas() {
-        return notas;
-    }
-
-    public void setNotas(String notas) {
-        this.notas = notas;
     }
 
     public String getNombre() {
@@ -72,14 +62,6 @@ public class responseEquipos {
 
     public void setColor(String color) {
         this.color = color;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
     }
 
 }
