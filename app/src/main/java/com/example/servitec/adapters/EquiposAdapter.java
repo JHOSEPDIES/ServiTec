@@ -16,7 +16,7 @@ import java.util.List;
 
 public class EquiposAdapter extends RecyclerView.Adapter<EquiposAdapter.EquiposViewHolder>{
 
-    ArrayList<responseEquipos> equipos;
+    public ArrayList<responseEquipos> equipos;
 
     public EquiposAdapter (ArrayList<responseEquipos> equipo)
     {
@@ -74,8 +74,8 @@ public class EquiposAdapter extends RecyclerView.Adapter<EquiposAdapter.EquiposV
         if (ListaEquipo == null) return;
 
         this.equipos = ListaEquipo;
-        notifyDataSetChanged();
 
+        notifyDataSetChanged();
     }
 
 }

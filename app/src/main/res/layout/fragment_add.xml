@@ -155,12 +155,11 @@
                 <Button
 
                     android:id="@+id/btn_guardar"
+                    style="@style/Widget.MaterialComponents.Button"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="12dp"
-                    android:text="@string/btn_equipo_text"
-                    style="@style/Widget.MaterialComponents.Button"
-                    >
+                    android:text="@string/btn_equipo_text">
 
                 </Button>
             </LinearLayout>
@@ -169,5 +168,13 @@
         </LinearLayout>
     </ScrollView>
 
+    <ProgressBar
+        android:visibility="invisible"
+        android:id="@+id/pb_add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+    </ProgressBar>
 
 </FrameLayout>

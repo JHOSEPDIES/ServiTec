@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.servitec.Interfaces.serviciosTec;
 import com.example.servitec.R;
@@ -39,7 +41,11 @@ public class Lista_Equipos_Fragment extends Fragment {
 
     private RecyclerView listaequipos;
 
-    ProgressBar pb;
+    private EquiposAdapter adapter;
+
+    private SwipeRefreshLayout swp;
+
+    private ProgressBar pb;
 
     public Lista_Equipos_Fragment() {
         // Required empty public constructor
@@ -64,23 +70,29 @@ public class Lista_Equipos_Fragment extends Fragment {
 
         pb = requireActivity().findViewById(R.id.pb_equipos);
 
+        swp = requireActivity().findViewById(R.id.swp_datos);
+
         listaequipos = requireActivity().findViewById(R.id.rv_equipos);
 
         StaggeredGridLayoutManager sgl = new StaggeredGridLayoutManager (1,StaggeredGridLayoutManager.VERTICAL);
         listaequipos.setLayoutManager(sgl);
 
+        inicializarAdaptador();
 
         callEquipos();
 
-        inicializarAdaptador();
-
-
-
+        swp.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                callEquipos();
+                swp.setRefreshing(false);
+            }
+        });
     }
 
 
     private void inicializarAdaptador() {
-        EquiposAdapter adapter = new EquiposAdapter(equipos);
+        adapter = new EquiposAdapter(equipos);
         listaequipos.setAdapter(adapter);
     }
 
@@ -108,22 +120,28 @@ public class Lista_Equipos_Fragment extends Fragment {
             {
                 try
                 {
-                    if (response.isSuccessful())
+                    if (response.isSuccessful() && response.code() == 200)
                     {
                         equipos = new ArrayList<>();
 
-
                         for (responseEquipos elemento : response.body())//realizamos un foreach para recorrer la lista
-
                         {
-                            equipos.add(new responseEquipos(elemento.getId(), "Nombre: "+elemento.getNombre(), "Dependencia: "+elemento.getDependencia(), "Modelo: "+elemento.getModelo(),
+                            equipos.add(new responseEquipos("Nombre: "+elemento.getNombre(), "Dependencia: "+elemento.getDependencia(), "Modelo: "+elemento.getModelo(),
                                     "Marca: "+elemento.getMarca(), "SN: "+elemento.getSn(), "Color: "+elemento.getColor(),
-                                    "Estado: "+elemento.getEstado(), "Notas: "+elemento.getNotas()));
+                                    "Estado: "+elemento.getEstado()));
                         }
-                        pb.setVisibility(View.INVISIBLE);                    }
+                        showList(equipos);
+
+                        pb.setVisibility(View.INVISIBLE);
+                    }
+                    else
+                    {
+                        Toast.makeText(requireActivity(),"Error en EndPoint", Toast.LENGTH_SHORT).show();
+                    }
 
                 }catch (Exception e)
                 {
+                    Toast.makeText(requireActivity(), "Error: "+e.toString(), Toast.LENGTH_SHORT).show();
                     pb.setVisibility(View.INVISIBLE);
                     e.printStackTrace();
                 }
@@ -132,12 +150,21 @@ public class Lista_Equipos_Fragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<responseEquipos>> call, Throwable t) {
+
+                Toast.makeText(requireActivity(), "Falló: "+t.toString(), Toast.LENGTH_SHORT).show();
                 pb.setVisibility(View.INVISIBLE);
                 t.printStackTrace();
 
             }
         });
     }
+
+    public void showList(ArrayList<responseEquipos> lista)
+    {
+        adapter.actualizar(lista);
+    }
+
+
 
 
 }

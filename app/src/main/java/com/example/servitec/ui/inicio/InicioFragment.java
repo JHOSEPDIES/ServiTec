@@ -65,7 +65,6 @@ public class InicioFragment extends Fragment {
                 .offsetY(5d)
                 .format("{%Value}{groupsSeparator: }");
 
-        cartesian.animation(true);
         cartesian.title("Gráficos de Actividades");
 
         cartesian.yScale().minimum(0d);
@@ -77,9 +76,6 @@ public class InicioFragment extends Fragment {
 
         cartesian.xAxis(0).title("Actividades");
         cartesian.yAxis(0).title("Cantidad");
-
-        cartesian.animation().duration(1500);
-        cartesian.animation().enabled(true);
 
         anyChartView.setChart(cartesian);
     }
