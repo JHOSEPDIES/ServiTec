@@ -1,7 +1,9 @@
 package com.example.servitec;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.transition.Explode;
 import android.transition.Fade;
 import android.transition.Slide;
 import android.view.Gravity;
@@ -10,11 +12,13 @@ import android.view.View;
 import android.view.Menu;
 import android.widget.Toast;
 
+import com.example.servitec.ui.login.LoginActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -35,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
         {
             Slide slide = new Slide(Gravity.BOTTOM);
-            slide.setDuration(1500);
+            slide.setDuration(1000);
             getWindow().setEnterTransition(slide);
 
             getWindow().setReturnTransition(new Fade());
@@ -69,10 +73,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
+        View v = new View(this);
         switch (item.getItemId())
         {
             case R.id.action_logout:
-
+                logout(v);
                 break;
 
             case R.id.action_settings:
@@ -88,5 +93,24 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    public void logout(View v)
+    {
+        Intent intent = new Intent(this, LoginActivity.class);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+        {
+            Slide slide = new Slide(Gravity.BOTTOM);
+            slide.setDuration(1000);
+            getWindow().setEnterTransition(slide);
+            startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(this, v ,"").toBundle());
+            finish();
+        }
+        else
+        {
+            startActivity(intent);
+            finish();
+        }
     }
 }

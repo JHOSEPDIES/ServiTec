@@ -2,6 +2,7 @@ package com.example.servitec.Interfaces;
 
 import com.example.servitec.clases.responseEquipos;
 import com.example.servitec.clases.responseServicios;
+import com.example.servitec.clases.responseServiciosGet;
 
 import java.util.List;
 
@@ -45,4 +46,7 @@ public interface serviciosTec {
             @Field("modelo") String modelo, @Field("marca") String Marca, @Field("ns") String ns,@Field("color") String color,
             @Field("servicio") String servicio
     );
+
+    @GET("buscar_servicios.php")
+    Call<List<responseServiciosGet>> getservicios();
 }

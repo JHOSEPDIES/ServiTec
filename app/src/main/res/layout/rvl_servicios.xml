@@ -22,33 +22,33 @@
             android:padding="16dp">
 
             <TextView
-                android:id="@+id/tv_nombre"
+                android:id="@+id/tv_nombre_serv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Macbook Pro"
                 android:textSize="19dp"
                 android:textStyle="bold"
                 />
-                        <TextView
-                            android:id="@+id/tv_dependencia"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="10dp"
-                            android:text="Sistemas"
-                            android:textAppearance="?attr/textAppearanceBody2"
-                            android:textColor="?android:attr/textColorSecondary"
-                            />
-                        <TextView
-                            android:id="@+id/tv_modelo"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="10dp"
-                            android:text="Macbook Pro"
-                            android:textAppearance="?attr/textAppearanceBody2"
-                            android:textColor="?android:attr/textColorSecondary"
-                            />
             <TextView
-                android:id="@+id/tv_marca"
+            android:id="@+id/tv_dependencia_serv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Sistemas"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textColor="?android:attr/textColorSecondary"/>
+
+            <TextView
+            android:id="@+id/tv_modelo_serv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Macbook Pro"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textColor="?android:attr/textColorSecondary"/>
+
+            <TextView
+                android:id="@+id/tv_marca_serv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
@@ -57,7 +57,7 @@
                 android:textColor="?android:attr/textColorSecondary"
                 />
             <TextView
-                android:id="@+id/tv_ns"
+                android:id="@+id/tv_ns_serv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
@@ -67,7 +67,7 @@
                 />
 
             <TextView
-                android:id="@+id/tv_color"
+                android:id="@+id/tv_color_serv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
@@ -77,7 +77,7 @@
                 />
 
             <TextView
-                android:id="@+id/tv_estado"
+                android:id="@+id/tv_estado_serv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="10dp"
@@ -87,7 +87,7 @@
                 />
 
             <TextView
-                android:id="@+id/tv_notas"
+                android:id="@+id/tv_servicio_serv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="SIN COMENTARIOS"

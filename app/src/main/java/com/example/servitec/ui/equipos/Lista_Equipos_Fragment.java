@@ -12,11 +12,13 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.servitec.Interfaces.serviciosTec;
@@ -131,12 +133,12 @@ public class Lista_Equipos_Fragment extends Fragment {
                     }
                     else
                     {
-                        Toast.makeText(requireActivity(),"Error en EndPoint", Toast.LENGTH_SHORT).show();
+                        showToast("Error en el EndPoint");
                     }
 
                 }catch (Exception e)
                 {
-                    Toast.makeText(requireActivity(), "Error: "+e.toString(), Toast.LENGTH_SHORT).show();
+                    showToast(e.toString());
                     pb.setVisibility(View.INVISIBLE);
                     e.printStackTrace();
                 }
@@ -146,10 +148,8 @@ public class Lista_Equipos_Fragment extends Fragment {
             @Override
             public void onFailure(Call<List<responseEquipos>> call, Throwable t) {
 
-                Toast.makeText(requireActivity(), "Falló: "+t.toString(), Toast.LENGTH_SHORT).show();
+                showToast(t.toString());
                 pb.setVisibility(View.INVISIBLE);
-                t.printStackTrace();
-
             }
         });
     }
@@ -159,6 +159,26 @@ public class Lista_Equipos_Fragment extends Fragment {
         adapter.actualizar(lista);
     }
 
+    private void showToast(String mensaje)
+    {
+        LayoutInflater inflater = getLayoutInflater();
+
+        View layout = inflater.inflate(R.layout.custom_toast, requireActivity().findViewById(R.id.layout_toast));
+
+        TextView txt_mensaje = layout.findViewById(R.id.txt_mensaje);
+
+        txt_mensaje.setText(mensaje);
+
+        Toast toast = new Toast(requireActivity());
+
+        toast.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL,0,0);
+
+        toast.setDuration(Toast.LENGTH_SHORT);
+
+        toast.setView(layout);
+
+        toast.show();
+    }
 
 
 

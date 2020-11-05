@@ -22,15 +22,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-        {
-            Slide slide = new Slide(Gravity.BOTTOM);
-            slide.setDuration(1500);
-            getWindow().setEnterTransition(slide);
-
-            getWindow().setExitTransition(slide);
-
-        }
     }
 
     public void ingresar(View v)
@@ -40,13 +31,15 @@ public class LoginActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
         {
             Explode explode = new Explode();
-            explode.setDuration(1500);
+            explode.setDuration(1000);
             getWindow().setExitTransition(explode);
             startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(this, v ,"").toBundle());
+            finish();
         }
         else
         {
             startActivity(intent);
+            finish();
         }
     }
 }
