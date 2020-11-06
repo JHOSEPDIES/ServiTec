@@ -1,13 +1,13 @@
 package com.example.servitec.clases;
 
-public class responseEquipos {
+public class POJOEquipos {
 
     String nombre,dependencia,modelo,marca,sn,color,estado,notas;
 
-    public responseEquipos() {
+    public POJOEquipos() {
     }
 
-    public responseEquipos( String nombre, String dependencia, String modelo, String marca, String sn, String color, String estado,String notas) {
+    public POJOEquipos(String nombre, String dependencia, String modelo, String marca, String sn, String color, String estado, String notas) {
         this.nombre = nombre;
         this.dependencia = dependencia;
         this.modelo = modelo;

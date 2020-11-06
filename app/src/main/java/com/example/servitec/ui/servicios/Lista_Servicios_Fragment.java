@@ -17,12 +17,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.servitec.Interfaces.serviciosTec;
 import com.example.servitec.R;
-import com.example.servitec.adapters.EquiposAdapter;
 import com.example.servitec.adapters.ServiciosAdapter;
-import com.example.servitec.clases.responseEquipos;
-import com.example.servitec.clases.responseServiciosGet;
+import com.example.servitec.clases.RetroClient;
+import com.example.servitec.clases.POJOServiciosGet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,13 +28,11 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class Lista_Servicios_Fragment extends Fragment {
 
-    ArrayList<responseServiciosGet> servicios = new ArrayList<>();
+    ArrayList<POJOServiciosGet> servicios = new ArrayList<>();
 
     private RecyclerView listaservicios;
 
@@ -92,25 +88,20 @@ public class Lista_Servicios_Fragment extends Fragment {
     private void callServicios()
     {
         pb.setVisibility(View.VISIBLE);
-        final  String url = "https://tecdies.com.mx/TECDIES_ANDROID/";
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create() )
-                .build();
-        serviciosTec service = retrofit.create(serviciosTec.class);
-        Call<List<responseServiciosGet>> response = service.getservicios();
 
-        response.enqueue(new Callback<List<responseServiciosGet>>() {
+        Call<List<POJOServiciosGet>> response = RetroClient.getInstance().getApi().getservicios();
+
+        response.enqueue(new Callback<List<POJOServiciosGet>>() {
             @Override
-            public void onResponse(Call<List<responseServiciosGet>> call, Response<List<responseServiciosGet>> response) {
+            public void onResponse(Call<List<POJOServiciosGet>> call, Response<List<POJOServiciosGet>> response) {
                 try
                 {
                     if (response.isSuccessful() && response.code() == 200)
                     {
                         servicios = new ArrayList<>();
-                        for (responseServiciosGet elemento : response.body())
+                        for (POJOServiciosGet elemento : response.body())
                         {
-                            servicios.add(new responseServiciosGet("Nombre: "+elemento.getNombre(),
+                            servicios.add(new POJOServiciosGet("Nombre: "+elemento.getNombre(),
                                     "Dependencia: "+elemento.getDependencia(),
                                     "Modelo: "+elemento.getModelo(),"Marca: "+elemento.getMarca(),
                                     "SM: "+elemento.getSn(),"Color: "+elemento.getColor(),
@@ -135,14 +126,14 @@ public class Lista_Servicios_Fragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<List<responseServiciosGet>> call, Throwable t) {
+            public void onFailure(Call<List<POJOServiciosGet>> call, Throwable t) {
                 pb.setVisibility(View.INVISIBLE);
                 showToast(t.toString());
             }
         });
     }
 
-    private void showList(ArrayList<responseServiciosGet> servicios)
+    private void showList(ArrayList<POJOServiciosGet> servicios)
     {
         adapter.actualizar(servicios);
     }

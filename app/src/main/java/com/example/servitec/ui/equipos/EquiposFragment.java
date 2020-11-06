@@ -43,9 +43,9 @@ public class EquiposFragment extends Fragment {
         ArrayList<Fragment> fragments = new ArrayList<>();
 
         fragments.add(new Lista_Equipos_Fragment());
-        fragments.add(new AddFragment());
-        fragments.add(new EditFragment());
-        fragments.add(new DeleteFragment());
+        fragments.add(new Add_Equipo_Fragment());
+        fragments.add(new Edit_Equipo_Fragment());
+        fragments.add(new Delete_Equipo_Fragment());
 
         return fragments;
     }

@@ -1,20 +1,19 @@
 package com.example.servitec.clases;
 
-public class responseServiciosGet {
+public class POJOServicios {
 
-    String nombre,dependencia,modelo,marca,sn,color,servicio;
+    String nombre,dependencia,modelo,marca,sn,color;
 
-    public responseServiciosGet() {
+    public POJOServicios() {
     }
 
-    public responseServiciosGet(String nombre, String dependencia, String modelo, String marca, String sn, String color,String servicio) {
+    public POJOServicios(String nombre, String dependencia, String modelo, String marca, String sn, String color) {
         this.nombre = nombre;
         this.dependencia = dependencia;
         this.modelo = modelo;
         this.marca = marca;
         this.sn = sn;
         this.color = color;
-        this.servicio = servicio;
     }
 
     public String getNombre() {
@@ -65,11 +64,4 @@ public class responseServiciosGet {
         this.color = color;
     }
 
-    public String getServicio() {
-        return servicio;
-    }
-
-    public void setServicio(String servicio) {
-        this.servicio = servicio;
-    }
 }

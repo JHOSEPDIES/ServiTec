@@ -9,16 +9,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.servitec.R;
-import com.example.servitec.clases.responseEquipos;
+import com.example.servitec.clases.POJOEquipos;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class EquiposAdapter extends RecyclerView.Adapter<EquiposAdapter.EquiposViewHolder>{
 
-    public ArrayList<responseEquipos> equipos;
+    public ArrayList<POJOEquipos> equipos;
 
-    public EquiposAdapter (ArrayList<responseEquipos> equipo)
+    public EquiposAdapter (ArrayList<POJOEquipos> equipo)
     {
         this.equipos = equipo;
     }
@@ -33,7 +32,7 @@ public class EquiposAdapter extends RecyclerView.Adapter<EquiposAdapter.EquiposV
     @Override
     public void onBindViewHolder(@NonNull EquiposViewHolder holder, int position) {
 
-        final responseEquipos equipo = equipos.get(position);
+        final POJOEquipos equipo = equipos.get(position);
 
         holder.nombre.setText(equipo.getNombre());
         holder.dependencia.setText(equipo.getDependencia());
@@ -69,7 +68,7 @@ public class EquiposAdapter extends RecyclerView.Adapter<EquiposAdapter.EquiposV
         }
     }
 
-    public void actualizar(ArrayList<responseEquipos> ListaEquipo)
+    public void actualizar(ArrayList<POJOEquipos> ListaEquipo)
     {
         if (ListaEquipo == null) return;
 

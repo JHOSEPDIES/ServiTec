@@ -1,7 +1,5 @@
 package com.example.servitec.ui.equipos;
 
-import android.app.ProgressDialog;
-import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,12 +9,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,9 +20,8 @@ import android.widget.Toast;
 import com.example.servitec.Interfaces.serviciosTec;
 import com.example.servitec.R;
 import com.example.servitec.adapters.EquiposAdapter;
-import com.example.servitec.clases.responseEquipos;
+import com.example.servitec.clases.POJOEquipos;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +34,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Lista_Equipos_Fragment extends Fragment {
 
-    ArrayList<responseEquipos> equipos = new ArrayList<>();
+    ArrayList<POJOEquipos> equipos = new ArrayList<>();
 
     private RecyclerView listaequipos;
 
@@ -109,11 +104,11 @@ public class Lista_Equipos_Fragment extends Fragment {
 
         serviciosTec service = retrofit.create(serviciosTec.class);
 
-        Call<List<responseEquipos>> response = service.getequipos();
+        Call<List<POJOEquipos>> response = service.getequipos();
 
-        response.enqueue(new Callback<List<responseEquipos>>() {
+        response.enqueue(new Callback<List<POJOEquipos>>() {
             @Override
-            public void onResponse(Call<List<responseEquipos>> call, Response<List<responseEquipos>> response)
+            public void onResponse(Call<List<POJOEquipos>> call, Response<List<POJOEquipos>> response)
             {
                 try
                 {
@@ -121,9 +116,9 @@ public class Lista_Equipos_Fragment extends Fragment {
                     {
                         equipos = new ArrayList<>();
 
-                        for (responseEquipos elemento : response.body())
+                        for (POJOEquipos elemento : response.body())
                         {
-                            equipos.add(new responseEquipos("Nombre: "+elemento.getNombre(), "Dependencia: "+elemento.getDependencia(), "Modelo: "+elemento.getModelo(),
+                            equipos.add(new POJOEquipos("Nombre: "+elemento.getNombre(), "Dependencia: "+elemento.getDependencia(), "Modelo: "+elemento.getModelo(),
                                     "Marca: "+elemento.getMarca(), "SN: "+elemento.getSn(), "Color: "+elemento.getColor(),
                                     "Estado: "+elemento.getEstado(),"Notas:"+elemento.getNotas()));
                         }
@@ -146,7 +141,7 @@ public class Lista_Equipos_Fragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<List<responseEquipos>> call, Throwable t) {
+            public void onFailure(Call<List<POJOEquipos>> call, Throwable t) {
 
                 showToast(t.toString());
                 pb.setVisibility(View.INVISIBLE);
@@ -154,7 +149,7 @@ public class Lista_Equipos_Fragment extends Fragment {
         });
     }
 
-    public void showList(ArrayList<responseEquipos> lista)
+    public void showList(ArrayList<POJOEquipos> lista)
     {
         adapter.actualizar(lista);
     }

@@ -18,8 +18,8 @@ import android.widget.Toast;
 
 import com.example.servitec.Interfaces.serviciosTec;
 import com.example.servitec.R;
-import com.example.servitec.adapters.EquiposAdapter;
-import com.example.servitec.clases.responseEquipos;
+import com.example.servitec.clases.POJOEquipos;
+import com.example.servitec.clases.RetroClient;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -32,18 +32,17 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-
-public class EditFragment extends Fragment {
+public class Edit_Equipo_Fragment extends Fragment {
 
     private ProgressBar pb;
 
-    ArrayList<responseEquipos> equipos = new ArrayList<>();
+    ArrayList<POJOEquipos> equipos = new ArrayList<>();
 
     private Button btn_buscar;
 
     private EditText codigo,nombre,dependencia,modelo,marca,ns,color,estado,notas;
 
-    public EditFragment() {
+    public Edit_Equipo_Fragment() {
         // Required empty public constructor
     }
 
@@ -100,27 +99,19 @@ public class EditFragment extends Fragment {
     private void callEquipobyId(String id)
     {
         pb.setVisibility(View.VISIBLE);
-        final  String url = "https://tecdies.com.mx/TECDIES_ANDROID/";
-        Gson gson = new GsonBuilder().setLenient().create();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create(gson) )
-                .build();
 
-        serviciosTec service = retrofit.create(serviciosTec.class);
+        Call<List<POJOEquipos>> response = RetroClient.getInstance().getApi().getequipobyId(id);
 
-        Call<List<responseEquipos>> response = service.getequipobyId(id);
-
-        response.enqueue(new Callback<List<responseEquipos>>() {
+        response.enqueue(new Callback<List<POJOEquipos>>() {
             @Override
-            public void onResponse(Call<List<responseEquipos>> call, Response<List<responseEquipos>> response)
+            public void onResponse(Call<List<POJOEquipos>> call, Response<List<POJOEquipos>> response)
             {
                 try
                 {
                     if (response.isSuccessful() && response.code() == 200)
                     {
 
-                        for (responseEquipos elemento : response.body())
+                        for (POJOEquipos elemento : response.body())
                         {
                             nombre.setText(elemento.getNombre());
                             dependencia.setText(elemento.getDependencia());
@@ -136,12 +127,12 @@ public class EditFragment extends Fragment {
                     }
                     else
                     {
-                        Toast.makeText(requireActivity(),"Error en EndPoint", Toast.LENGTH_SHORT).show();
+                        showToast("Error en el EndPoint");
                     }
 
                 }catch (Exception e)
                 {
-                    Toast.makeText(requireActivity(), "Error: "+e.toString(), Toast.LENGTH_SHORT).show();
+                    showToast(e.toString());
                     pb.setVisibility(View.INVISIBLE);
                     e.printStackTrace();
                 }
@@ -149,11 +140,10 @@ public class EditFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<List<responseEquipos>> call, Throwable t) {
-
-                Toast.makeText(requireActivity(), "Falló: "+t.toString(), Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<List<POJOEquipos>> call, Throwable t) {
+                showToast(t.toString());
                 pb.setVisibility(View.INVISIBLE);
-
+                limpiarContainers();
             }
         });
 

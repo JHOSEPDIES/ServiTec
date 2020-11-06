@@ -19,8 +19,9 @@ import android.widget.Toast;
 
 import com.example.servitec.Interfaces.serviciosTec;
 import com.example.servitec.R;
-import com.example.servitec.clases.responseEquipos;
-import com.example.servitec.clases.responseServicios;
+import com.example.servitec.clases.POJORespuesta;
+import com.example.servitec.clases.POJOServicios;
+import com.example.servitec.clases.RetroClient;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -31,6 +32,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import static java.lang.Boolean.TRUE;
 
 public class Add_Servicios_Fragment extends Fragment {
 
@@ -118,37 +121,24 @@ public class Add_Servicios_Fragment extends Fragment {
     {
         pb.setVisibility(View.VISIBLE);
 
-        final  String url = "https://tecdies.com.mx/TECDIES_ANDROID/";
+        Call<POJORespuesta> response = RetroClient.getInstance().getApi().guardarServicio(nom,dep,mod,mar,ns,col,ser);
 
-        Gson gson = new GsonBuilder().setLenient().create();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-
-        serviciosTec service = retrofit.create(serviciosTec.class);
-
-        Call<String> response = service.guardarServicio(nom,dep,mod,mar,ns,col,ser);
-
-        response.enqueue(new Callback<String>() {
+        response.enqueue(new Callback<POJORespuesta>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response)
+            public void onResponse(Call<POJORespuesta> call, Response<POJORespuesta> response)
             {
                 try
                 {
-                    Log.e("Respuesta",response.body());
-
-                    if (response.isSuccessful() && response.code() == 200 && response.body().equals("1"))
+                    if (response.isSuccessful() && response.code() == 200 && response.body().estado() == TRUE)
                     {
                         pb.setVisibility(View.INVISIBLE);
-                        showToast("Servicio Guardado!");
+                        showToast(response.body().respuesta());
                         limpiarContainers();
                     }
                     else
                     {
                         pb.setVisibility(View.INVISIBLE);
-                        showToast("Error al Guardar!");
+                        showToast(response.body().respuesta());
                         limpiarContainers();
                     }
                 }catch (Exception e)
@@ -159,9 +149,8 @@ public class Add_Servicios_Fragment extends Fragment {
                 }
 
             }
-
             @Override
-            public void onFailure(Call<String> call, Throwable t)
+            public void onFailure(Call<POJORespuesta> call, Throwable t)
             {
                 pb.setVisibility(View.INVISIBLE);
                 showToast(t.toString());
@@ -175,27 +164,16 @@ public class Add_Servicios_Fragment extends Fragment {
     {
         pb.setVisibility(View.VISIBLE);
 
-        final  String url = "https://tecdies.com.mx/TECDIES_ANDROID/";
+        Call<List<POJOServicios>> response = RetroClient.getInstance().getApi().getequipobyIdServicio(id);
 
-        Gson gson = new GsonBuilder().setLenient().create();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create(gson) )
-                .build();
-
-        serviciosTec service = retrofit.create(serviciosTec.class);
-
-        Call<List<responseServicios>> response = service.getequipobyIdServicio(id);
-
-        response.enqueue(new Callback<List<responseServicios>>() {
+        response.enqueue(new Callback<List<POJOServicios>>() {
             @Override
-            public void onResponse(Call<List<responseServicios>> call, Response<List<responseServicios>> response) {
+            public void onResponse(Call<List<POJOServicios>> call, Response<List<POJOServicios>> response) {
                 try
                 {
                     if (response.isSuccessful() && response.code() == 200)
                     {
-                        for (responseServicios elemento : response.body()) {
+                        for (POJOServicios elemento : response.body()) {
                             pb.setVisibility(View.INVISIBLE);
                             nombre.setText(elemento.getNombre());
                             dependencia.setText(elemento.getDependencia());
@@ -221,7 +199,7 @@ public class Add_Servicios_Fragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<List<responseServicios>> call, Throwable t)
+            public void onFailure(Call<List<POJOServicios>> call, Throwable t)
             {
                 pb.setVisibility(View.INVISIBLE);
                 showToast(t.toString());
@@ -263,6 +241,7 @@ public class Add_Servicios_Fragment extends Fragment {
         marca.setText("");
         ns.setText("");
         color.setText("");
+        servicio.setText("");
     }
 
 

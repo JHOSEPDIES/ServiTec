@@ -18,11 +18,10 @@ import android.widget.Toast;
 
 import com.example.servitec.Interfaces.serviciosTec;
 import com.example.servitec.R;
-import com.example.servitec.clases.responseEquipos;
+import com.example.servitec.clases.POJORespuesta;
+import com.example.servitec.clases.RetroClient;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,7 +29,9 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class DeleteFragment extends Fragment {
+import static java.lang.Boolean.TRUE;
+
+public class Delete_Equipo_Fragment extends Fragment {
 
     private ProgressBar pb;
 
@@ -38,7 +39,7 @@ public class DeleteFragment extends Fragment {
 
     private EditText tv_codigo;
 
-    public DeleteFragment() {
+    public Delete_Equipo_Fragment() {
         // Required empty public constructor
     }
 
@@ -84,25 +85,18 @@ public class DeleteFragment extends Fragment {
     private void eliminarEquipo(String id)
     {
         pb.setVisibility(View.VISIBLE);
-        final  String url = "https://tecdies.com.mx/TECDIES_ANDROID/";
-        Gson gson = new GsonBuilder().setLenient().create();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create(gson) )
-                .build();
 
-        serviciosTec service = retrofit.create(serviciosTec.class);
+        Call<POJORespuesta> response = RetroClient.getInstance().getApi().eliminarEquipo(id);
 
-        Call<String> response = service.eliminarEquipo(id);
-
-        response.enqueue(new Callback<String>() {
+        response.enqueue(new Callback<POJORespuesta>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                if (response.isSuccessful() && response.code() == 200 && response.body().equals("1"))
+            public void onResponse(Call<POJORespuesta> call, Response<POJORespuesta> response) {
+
+                if (response.isSuccessful() && response.code() == 200 && response.body().estado() == TRUE)
                 {
                     try
                     {
-                        showToast("¡Equipo Eliminado Correctamente!");
+                        showToast(response.body().respuesta());
                         pb.setVisibility(View.INVISIBLE);
                         cleanContainer();
                     }catch (Exception e)
@@ -114,14 +108,14 @@ public class DeleteFragment extends Fragment {
                 }
                 else
                 {
-                    showToast("¡No Existe Equipo!");
+                    showToast(response.body().respuesta());
                     pb.setVisibility(View.INVISIBLE);
                     cleanContainer();
                 }
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(Call<POJORespuesta> call, Throwable t) {
                 showToast(t.toString());
                 pb.setVisibility(View.INVISIBLE);
                 cleanContainer();

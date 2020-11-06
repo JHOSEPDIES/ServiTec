@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,12 +18,10 @@ import android.widget.Toast;
 
 import com.example.servitec.Interfaces.serviciosTec;
 import com.example.servitec.R;
-import com.example.servitec.clases.responseEquipos;
+import com.example.servitec.clases.POJORespuesta;
+import com.example.servitec.clases.RetroClient;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -32,7 +29,9 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class AddFragment extends Fragment {
+import static java.lang.Boolean.TRUE;
+
+public class Add_Equipo_Fragment extends Fragment {
 
     private ProgressBar pb;
 
@@ -40,7 +39,7 @@ public class AddFragment extends Fragment {
 
     private EditText nombre,dependencia,modelo,marca,ns,color,estado,notas;
 
-    public AddFragment() {
+    public Add_Equipo_Fragment() {
     }
 
     @Override
@@ -92,36 +91,31 @@ public class AddFragment extends Fragment {
     private void guardarDatos(String nom, String dep, String mod, String mar, String ns, String edo, String col, String not)
     {
         pb.setVisibility(View.VISIBLE);
-        final  String url = "https://tecdies.com.mx/TECDIES_ANDROID/";
-        Gson gson = new GsonBuilder().setLenient().create();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create(gson) )
-                .build();
-        serviciosTec service = retrofit.create(serviciosTec.class);
 
-        Call<String> response = service.guardarEquipo(nom,dep,mod,mar, ns,col,edo,not);
+        Call<POJORespuesta> response = RetroClient.getInstance().getApi().guardarEquipo(nom,dep,mod,mar, ns,col,edo,not);
 
-        response.enqueue(new Callback<String>() {
+        response.enqueue(new Callback<POJORespuesta>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                if (response.isSuccessful() && response.code() == 200 && response.body().equals("1"))
+            public void onResponse(Call<POJORespuesta> call, Response<POJORespuesta> response) {
+
+                if (response.isSuccessful() && response.code() == 200 && response.body().estado() == TRUE)
                 {
                     pb.setVisibility(View.INVISIBLE);
-                    showToast("Guardado Correctamente");
+                    showToast(response.body().respuesta());
                     limpiarContainers();
                 }
                 else
                 {
                     pb.setVisibility(View.INVISIBLE);
-                    Toast.makeText(requireActivity(), "Error en el EndPoint", Toast.LENGTH_SHORT).show();
+                    showToast(response.body().respuesta());
+                    limpiarContainers();
                 }
             }
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(Call<POJORespuesta> call, Throwable t) {
                 pb.setVisibility(View.INVISIBLE);
-                Toast.makeText(requireActivity(), t.toString(), Toast.LENGTH_SHORT).show();
-
+                showToast(t.toString());
+                limpiarContainers();
             }
         });
     }

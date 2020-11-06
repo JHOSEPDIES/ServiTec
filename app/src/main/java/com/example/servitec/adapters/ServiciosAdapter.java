@@ -9,16 +9,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.servitec.R;
-import com.example.servitec.clases.responseEquipos;
-import com.example.servitec.clases.responseServiciosGet;
+import com.example.servitec.clases.POJOServiciosGet;
 
 import java.util.ArrayList;
 
 public class ServiciosAdapter extends RecyclerView.Adapter<ServiciosAdapter.ServiciosViewHolder> {
 
-    public ArrayList<responseServiciosGet> servicios;
+    public ArrayList<POJOServiciosGet> servicios;
 
-    public ServiciosAdapter (ArrayList<responseServiciosGet> servicio)
+    public ServiciosAdapter (ArrayList<POJOServiciosGet> servicio)
     {
         this.servicios = servicio;
     }
@@ -33,7 +32,7 @@ public class ServiciosAdapter extends RecyclerView.Adapter<ServiciosAdapter.Serv
     @Override
     public void onBindViewHolder(@NonNull ServiciosViewHolder holder, int position) {
 
-        final responseServiciosGet servicio = servicios.get(position);
+        final POJOServiciosGet servicio = servicios.get(position);
 
         holder.nombre.setText(servicio.getNombre());
         holder.dependencia.setText(servicio.getDependencia());
@@ -67,7 +66,7 @@ public class ServiciosAdapter extends RecyclerView.Adapter<ServiciosAdapter.Serv
         }
     }
 
-    public void actualizar(ArrayList<responseServiciosGet> ListaServicio)
+    public void actualizar(ArrayList<POJOServiciosGet> ListaServicio)
     {
         if (ListaServicio == null) return;
 

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.equipos.EditFragment">
+    tools:context=".ui.equipos.Edit_Equipo_Fragment">
 
     <!-- TODO: Update blank fragment layout -->
     <ScrollView
