@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.media.QrFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/data_text"
+                android:textSize="38sp"
+                android:text="@string/txt_code_qr"
+                android:padding="10dp"
+                android:layout_margin="10dp"
+                android:fontFamily="casual"
+                android:textColor="#000"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_margin="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txt_value_code"
+                    android:hint="@string/txt_hint_code_qr"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </com.google.android.material.textfield.TextInputEditText>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/btn_scan_code"
+                android:layout_margin="15dp"
+                android:textColor="#FFF"
+                android:text="@string/txt_btn_code_qr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <ImageView
+                android:id="@+id/bar_code_img"
+                android:adjustViewBounds="true"
+                android:layout_gravity="center"
+                android:src="@drawable/codigo_qr"
+                android:layout_width="150dp"
+                android:layout_marginBottom="50dp"
+                android:layout_height="150dp"
+                android:contentDescription="@string/desc_img_code_qr" />
+
+            <LinearLayout
+                android:layout_marginTop="-30dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <Button
+                    android:id="@+id/btn_upload_img_code"
+                    android:layout_margin="15dp"
+                    android:textColor="#fff"
+                    android:text="@string/txt_btn_upload_txt_code_qr"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</FrameLayout>

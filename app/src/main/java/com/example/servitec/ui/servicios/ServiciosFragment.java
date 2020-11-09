@@ -49,8 +49,10 @@ public class ServiciosFragment extends Fragment {
 
     private void setUpViewPager() {
 
-        viewPager.setAdapter(new PageAdapter(getParentFragmentManager(), agregarFragments()));
+        viewPager.setAdapter(new PageAdapter(getChildFragmentManager(), agregarFragments()));
+
         tabLayout.setupWithViewPager(viewPager);
+
         tabLayout.getTabAt(0).setText("Agregar").setIcon(R.drawable.add);
         tabLayout.getTabAt(1).setText("Listado").setIcon(R.drawable.lista);
     }

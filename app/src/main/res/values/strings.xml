@@ -44,4 +44,11 @@
     <string name="ingresar_login">Ingresar</string>
     <string name="contrasena_login">Contraseña</string>
     <string name="imagen_login">IMAGEN</string>
+    <string name="menu_media">Media</string>
+    <string name="lbl_media">Media</string>
+    <string name="txt_code_qr">Ingrese Código</string>
+    <string name="txt_hint_code_qr">Ingrese Valores</string>
+    <string name="txt_btn_code_qr">Generar Código QR</string>
+    <string name="desc_img_code_qr">Imagen default</string>
+    <string name="txt_btn_upload_txt_code_qr">Subir Imagen</string>
 </resources>

@@ -21,6 +21,7 @@ import com.example.servitec.Interfaces.serviciosTec;
 import com.example.servitec.R;
 import com.example.servitec.adapters.EquiposAdapter;
 import com.example.servitec.clases.POJOEquipos;
+import com.example.servitec.clases.RetroClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -96,15 +97,8 @@ public class Lista_Equipos_Fragment extends Fragment {
     private void callEquipos()
     {
         pb.setVisibility(View.VISIBLE);
-        final  String url = "https://tecdies.com.mx/TECDIES_ANDROID/";
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create() )
-                .build();
 
-        serviciosTec service = retrofit.create(serviciosTec.class);
-
-        Call<List<POJOEquipos>> response = service.getequipos();
+        Call<List<POJOEquipos>> response = RetroClient.getInstance().getApi().getequipos();
 
         response.enqueue(new Callback<List<POJOEquipos>>() {
             @Override

@@ -27,19 +27,7 @@ public class LoginActivity extends AppCompatActivity {
     public void ingresar(View v)
     {
         Intent intent = new Intent(this, MainActivity.class);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-        {
-            Explode explode = new Explode();
-            explode.setDuration(1000);
-            getWindow().setExitTransition(explode);
-            startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(this, v ,"").toBundle());
-            finish();
-        }
-        else
-        {
             startActivity(intent);
             finish();
-        }
     }
 }

@@ -17,6 +17,7 @@ import com.google.android.material.tabs.TabLayout;
 import java.util.ArrayList;
 
 public class EquiposFragment extends Fragment {
+
     private TabLayout tabLayout;
     private ViewPager viewPager;
 
@@ -31,8 +32,8 @@ public class EquiposFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        tabLayout = requireActivity().findViewById(R.id.tabLayout);
-        viewPager = requireActivity().findViewById(R.id.viewpager);
+        tabLayout = requireActivity().findViewById(R.id.tabLayout_equipos);
+        viewPager = requireActivity().findViewById(R.id.viewpager_equipos);
 
 
         setUpViewPager();
@@ -52,7 +53,7 @@ public class EquiposFragment extends Fragment {
 
     private void setUpViewPager() {
 
-        viewPager.setAdapter(new PageAdapter(getParentFragmentManager(), agregarFragments()));
+        viewPager.setAdapter(new PageAdapter(getChildFragmentManager(), agregarFragments()));
         tabLayout.setupWithViewPager(viewPager);
 
         tabLayout.getTabAt(0).setText("Listado").setIcon(R.drawable.lista);

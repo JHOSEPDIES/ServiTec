@@ -9,7 +9,24 @@
         android:id="@+id/nav_home"
         android:name="com.example.servitec.ui.inicio.InicioFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_inicio" />
+        tools:layout="@layout/fragment_inicio" >
+        <action
+            android:id="@+id/action_nav_home_to_graficasFragment"
+            app:destination="@id/graficasFragment"
+            app:enterAnim="@anim/fragment_fade_enter" />
+        <action
+            android:id="@+id/action_nav_home_to_add_Servicios_Fragment"
+            app:destination="@id/add_Servicios_Fragment"
+            app:enterAnim="@anim/fragment_fade_enter" />
+        <action
+            android:id="@+id/action_nav_home_to_add_Equipo_Fragment"
+            app:destination="@id/add_Equipo_Fragment"
+            app:enterAnim="@anim/fragment_fade_enter" />
+        <action
+            android:id="@+id/action_nav_home_to_add_Usuarios_Fragment"
+            app:destination="@id/add_Usuarios_Fragment"
+            app:enterAnim="@anim/fragment_fade_enter" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_gallery"
@@ -22,4 +39,29 @@
         android:name="com.example.servitec.ui.servicios.ServiciosFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_servicios" />
+    <fragment
+        android:id="@+id/nav_media"
+        android:name="com.example.servitec.ui.media.MediaFragment"
+        android:label="@string/lbl_media"
+        tools:layout="@layout/fragment_media" />
+    <fragment
+        android:id="@+id/graficasFragment"
+        android:name="com.example.servitec.ui.graficas.GraficasFragment"
+        android:label="Gráficas"
+        tools:layout="@layout/fragment_graficas" />
+    <fragment
+        android:id="@+id/add_Servicios_Fragment"
+        android:name="com.example.servitec.ui.servicios.Add_Servicios_Fragment"
+        android:label="Añadir Servicios"
+        tools:layout="@layout/fragment_add__servicios_" />
+    <fragment
+        android:id="@+id/add_Equipo_Fragment"
+        android:name="com.example.servitec.ui.equipos.Add_Equipo_Fragment"
+        android:label="Añadir Equipos"
+        tools:layout="@layout/fragment_add" />
+    <fragment
+        android:id="@+id/add_Usuarios_Fragment"
+        android:name="com.example.servitec.ui.usuarios.Add_Usuarios_Fragment"
+        android:label="Añadir Usuarios"
+        tools:layout="@layout/fragment_add__usuarios_" />
 </navigation>

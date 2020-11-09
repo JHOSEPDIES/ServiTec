@@ -1,6 +1,7 @@
 package com.example.servitec.Interfaces;
 
 import com.example.servitec.clases.POJOEquipos;
+import com.example.servitec.clases.POJOMedia;
 import com.example.servitec.clases.POJORespuesta;
 import com.example.servitec.clases.POJOServicios;
 import com.example.servitec.clases.POJOServiciosGet;
@@ -50,4 +51,15 @@ public interface serviciosTec {
 
     @GET("buscar_servicios.php")
     Call<List<POJOServiciosGet>> getservicios();
+
+
+    @FormUrlEncoded
+    @POST("upload_image.php")
+    Call<POJORespuesta> uploadImage(
+            @Field("EN_IMAGE") String encodedImage
+    );
+
+    @GET("buscar_media.php")
+    Call<List<POJOMedia>> getmedia();
+
 }

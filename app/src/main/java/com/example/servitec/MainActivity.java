@@ -42,8 +42,6 @@ public class MainActivity extends AppCompatActivity {
             slide.setDuration(1000);
             getWindow().setEnterTransition(slide);
 
-            getWindow().setReturnTransition(new Fade());
-
         }
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -54,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationView navigationView = findViewById(R.id.nav_view);
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
+                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow,R.id.nav_media)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
