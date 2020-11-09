@@ -9,23 +9,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.servitec.R;
-import com.example.servitec.adapters.EquiposAdapter;
-import com.example.servitec.adapters.MediaAdapter;
-import com.example.servitec.clases.POJOEquipos;
-import com.example.servitec.clases.POJOMedia;
+import com.example.servitec.adapters.rv_adapters.MediaAdapter;
+import com.example.servitec.clases.POJO.POJOMedia;
 import com.example.servitec.clases.RetroClient;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;

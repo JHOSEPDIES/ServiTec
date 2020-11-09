@@ -1,7 +1,6 @@
-package com.example.servitec.adapters;
+package com.example.servitec.adapters.rv_adapters;
 
 import android.content.Context;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.servitec.R;
-import com.example.servitec.clases.POJOEquipos;
-import com.example.servitec.clases.POJOMedia;
-import com.example.servitec.clases.POJOServiciosGet;
-import com.squareup.picasso.OkHttp3Downloader;
+import com.example.servitec.clases.POJO.POJOMedia;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

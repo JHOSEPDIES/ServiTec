@@ -18,9 +18,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.servitec.R;
-import com.example.servitec.adapters.ServiciosAdapter;
+import com.example.servitec.adapters.rv_adapters.ServiciosAdapter;
 import com.example.servitec.clases.RetroClient;
-import com.example.servitec.clases.POJOServiciosGet;
+import com.example.servitec.clases.POJO.POJOServiciosGet;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.example.servitec.clases;
+package com.example.servitec.clases.POJO;
 
 public class POJORespuesta {
 

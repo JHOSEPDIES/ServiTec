@@ -1,4 +1,4 @@
-package com.example.servitec.adapters;
+package com.example.servitec.adapters.rv_adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.servitec.R;
-import com.example.servitec.clases.POJOServiciosGet;
+import com.example.servitec.clases.POJO.POJOServiciosGet;
 
 import java.util.ArrayList;
 

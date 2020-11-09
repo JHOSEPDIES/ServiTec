@@ -17,10 +17,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.servitec.Interfaces.serviciosTec;
 import com.example.servitec.R;
-import com.example.servitec.adapters.EquiposAdapter;
-import com.example.servitec.clases.POJOEquipos;
+import com.example.servitec.adapters.rv_adapters.EquiposAdapter;
+import com.example.servitec.clases.POJO.POJOEquipos;
 import com.example.servitec.clases.RetroClient;
 
 import java.util.ArrayList;
@@ -29,8 +28,6 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class Lista_Equipos_Fragment extends Fragment {

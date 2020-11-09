@@ -1,6 +1,5 @@
 package com.example.servitec.ui.media;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -23,7 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.servitec.R;
-import com.example.servitec.clases.POJORespuesta;
+import com.example.servitec.clases.POJO.POJORespuesta;
 import com.example.servitec.clases.RetroClient;
 
 import java.io.ByteArrayOutputStream;
@@ -34,7 +33,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static android.app.Activity.RESULT_OK;
-import static java.util.jar.Pack200.Unpacker.TRUE;
 
 
 public class Up_Image_Fragment extends Fragment {
