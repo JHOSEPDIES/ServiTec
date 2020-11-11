@@ -7,4 +7,9 @@
         android:endColor="#FDBB2D"
         android:angle="45">
     </gradient>
+
+    <corners
+        android:radius="10dp">
+    </corners>
+
 </shape>

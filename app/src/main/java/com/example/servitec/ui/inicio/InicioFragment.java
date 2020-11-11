@@ -92,10 +92,6 @@ public class InicioFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
-
-/*                Bundle args = new Bundle();
-                args.putString("id_boleta",id);*/
-
                 navController.navigate(R.id.action_nav_home_to_add_Equipo_Fragment);
             }
         });
@@ -106,10 +102,6 @@ public class InicioFragment extends Fragment {
             public void onClick(View view)
             {
                 NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
-
-/*                Bundle args = new Bundle();
-                args.putString("id_boleta",id);*/
-
                 navController.navigate(R.id.action_nav_home_to_graficasFragment);
             }
         });
@@ -120,10 +112,6 @@ public class InicioFragment extends Fragment {
             public void onClick(View view)
             {
                 NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
-
-/*                Bundle args = new Bundle();
-                args.putString("id_boleta",id);*/
-
                 navController.navigate(R.id.action_nav_home_to_add_Usuarios_Fragment);
             }
         });
@@ -131,7 +119,8 @@ public class InicioFragment extends Fragment {
 
     private void openScanner()
     {
-        new IntentIntegrator(requireActivity()).initiateScan();
+
+        IntentIntegrator.forSupportFragment(InicioFragment.this).initiateScan();
     }
 
     @Override
@@ -147,9 +136,12 @@ public class InicioFragment extends Fragment {
                 {
 
                     NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
+
                     Bundle args = new Bundle();
+
                     args.putString("codigo",result.getContents());
-                    navController.navigate(R.id.action_nav_home_to_add_Servicios_Fragment);
+
+                    navController.navigate(R.id.action_nav_home_to_add_Servicios_Fragment,args);
             }
         }
         else{

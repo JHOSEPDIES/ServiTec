@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.anychart.AnyChart;
 import com.anychart.AnyChartView;
@@ -22,9 +23,15 @@ import com.anychart.enums.HoverMode;
 import com.anychart.enums.Position;
 import com.anychart.enums.TooltipPositionMode;
 import com.example.servitec.R;
+import com.example.servitec.clases.POJO.POJOGraficas;
+import com.example.servitec.clases.RetroClient;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class GraficasFragment extends Fragment {
@@ -54,10 +61,34 @@ public class GraficasFragment extends Fragment {
 
         pb_graficas = requireActivity().findViewById(R.id.pb_graficas);
 
-        iniciarGraficas();
+        getChart();
     }
 
-    private void iniciarGraficas()
+    private void getChart()
+    {
+        Call<List<POJOGraficas>> call = RetroClient.getInstance().getApi().getData_Services_Chart();
+
+        call.enqueue(new Callback<List<POJOGraficas>>() {
+            @Override
+            public void onResponse(Call<List<POJOGraficas>> call, Response<List<POJOGraficas>> response) {
+                if (response.isSuccessful() && response.code() == 200)
+                {
+                    iniciarGraficas(response);
+                }
+                else
+                {
+                    Toast.makeText(requireActivity(), "No Existen Datos", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<POJOGraficas>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void iniciarGraficas(Response<List<POJOGraficas>> response)
     {
         pb_graficas.setVisibility(View.VISIBLE);
 
@@ -65,9 +96,11 @@ public class GraficasFragment extends Fragment {
         Cartesian cartesian = AnyChart.column();
 
         List<DataEntry> data = new ArrayList<>();
-        data.add(new ValueDataEntry("Reparaciones", 12));
-        data.add(new ValueDataEntry("Revisiones", 20));
-        data.add(new ValueDataEntry("Bajas", 2));
+
+        for (POJOGraficas elemento : response.body())
+        {
+            data.add(new ValueDataEntry("Servicios", elemento.getServicios()));
+        }
 
         Column column = cartesian.column(data);
 

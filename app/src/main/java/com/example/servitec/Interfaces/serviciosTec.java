@@ -1,6 +1,7 @@
 package com.example.servitec.Interfaces;
 
 import com.example.servitec.clases.POJO.POJOEquipos;
+import com.example.servitec.clases.POJO.POJOGraficas;
 import com.example.servitec.clases.POJO.POJOMedia;
 import com.example.servitec.clases.POJO.POJORespuesta;
 import com.example.servitec.clases.POJO.POJOServicios;
@@ -61,5 +62,9 @@ public interface serviciosTec {
 
     @GET("buscar_media.php")
     Call<List<POJOMedia>> getmedia();
+
+
+    @GET("obtener_datos_graficas.php")
+    Call<List<POJOGraficas>> getData_Services_Chart();
 
 }

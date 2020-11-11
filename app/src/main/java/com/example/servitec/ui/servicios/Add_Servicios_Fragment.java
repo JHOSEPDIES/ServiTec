@@ -76,6 +76,19 @@ public class Add_Servicios_Fragment extends Fragment {
         servicio = requireActivity().findViewById(R.id.trabajo_servicio);
 
 
+        Bundle extras = getArguments();
+
+        if (extras == null)
+        {
+            return;
+        }
+        else
+        {
+            String code = extras.getString("codigo");
+            showToast(code);
+        }
+
+
         btn_buscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
