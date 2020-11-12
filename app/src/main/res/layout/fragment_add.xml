@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.equipos.Add_Equipo_Fragment">
+    tools:context=".ui.equipos.add.Add_Equipo_Fragment">
 
     <ScrollView
         android:layout_width="match_parent"

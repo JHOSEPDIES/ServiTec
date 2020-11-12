@@ -13,10 +13,6 @@ import android.view.ViewGroup;
 
 import com.example.servitec.R;
 import com.example.servitec.adapters.PageAdapter;
-import com.example.servitec.ui.equipos.Add_Equipo_Fragment;
-import com.example.servitec.ui.equipos.Delete_Equipo_Fragment;
-import com.example.servitec.ui.equipos.Edit_Equipo_Fragment;
-import com.example.servitec.ui.equipos.Lista_Equipos_Fragment;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;

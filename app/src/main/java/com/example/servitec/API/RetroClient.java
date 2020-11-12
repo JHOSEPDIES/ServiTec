@@ -1,6 +1,4 @@
-package com.example.servitec.clases;
-
-import com.example.servitec.Interfaces.serviciosTec;
+package com.example.servitec.API;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

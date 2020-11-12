@@ -1,28 +1,27 @@
-package com.example.servitec.clases.POJO;
+package com.example.servitec.clases.Modelos;
 
-public class POJOServiciosGet {
+public class POJOServicios {
 
-    String nombre_comun,dependencia,modelo,marca,ns,color,servicio;
+    String nombre,dependencia,modelo,marca,sn,color;
 
-    public POJOServiciosGet() {
+    public POJOServicios() {
     }
 
-    public POJOServiciosGet(String nombre, String dependencia, String modelo, String marca, String ns, String color, String servicio) {
-        this.nombre_comun = nombre;
+    public POJOServicios(String nombre, String dependencia, String modelo, String marca, String sn, String color) {
+        this.nombre = nombre;
         this.dependencia = dependencia;
         this.modelo = modelo;
         this.marca = marca;
-        this.ns = ns;
+        this.sn = sn;
         this.color = color;
-        this.servicio = servicio;
     }
 
     public String getNombre() {
-        return nombre_comun;
+        return nombre;
     }
 
     public void setNombre(String nombre) {
-        this.nombre_comun = nombre;
+        this.nombre = nombre;
     }
 
     public String getDependencia() {
@@ -50,11 +49,11 @@ public class POJOServiciosGet {
     }
 
     public String getSn() {
-        return ns;
+        return sn;
     }
 
     public void setSn(String sn) {
-        this.ns = sn;
+        this.sn = sn;
     }
 
     public String getColor() {
@@ -65,11 +64,4 @@ public class POJOServiciosGet {
         this.color = color;
     }
 
-    public String getServicio() {
-        return servicio;
-    }
-
-    public void setServicio(String servicio) {
-        this.servicio = servicio;
-    }
 }

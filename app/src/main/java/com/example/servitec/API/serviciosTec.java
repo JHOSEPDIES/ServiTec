@@ -1,11 +1,11 @@
-package com.example.servitec.Interfaces;
+package com.example.servitec.API;
 
-import com.example.servitec.clases.POJO.POJOEquipos;
-import com.example.servitec.clases.POJO.POJOGraficas;
-import com.example.servitec.clases.POJO.POJOMedia;
-import com.example.servitec.clases.POJO.POJORespuesta;
-import com.example.servitec.clases.POJO.POJOServicios;
-import com.example.servitec.clases.POJO.POJOServiciosGet;
+import com.example.servitec.clases.Modelos.POJOEquipos;
+import com.example.servitec.clases.Modelos.POJOGraficas;
+import com.example.servitec.clases.Modelos.POJOMedia;
+import com.example.servitec.clases.Modelos.POJORespuesta;
+import com.example.servitec.clases.Modelos.POJOServicios;
+import com.example.servitec.clases.Modelos.POJOServiciosGet;
 
 import java.util.List;
 

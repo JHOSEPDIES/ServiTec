@@ -1,4 +1,4 @@
-package com.example.servitec.ui.equipos;
+package com.example.servitec.ui.equipos.add;
 
 import android.os.Bundle;
 
@@ -17,8 +17,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.servitec.R;
-import com.example.servitec.clases.POJO.POJORespuesta;
-import com.example.servitec.clases.RetroClient;
+import com.example.servitec.clases.Modelos.POJORespuesta;
+import com.example.servitec.API.RetroClient;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,13 +26,15 @@ import retrofit2.Response;
 
 import static java.lang.Boolean.TRUE;
 
-public class Add_Equipo_Fragment extends Fragment {
+public class Add_Equipo_Fragment extends Fragment implements Add_Equipos_View{
 
     private ProgressBar pb;
 
     private Button guardar;
 
     private EditText nombre,dependencia,modelo,marca,ns,color,estado,notas;
+
+    Add_Equipos_Presenter presenter;
 
     public Add_Equipo_Fragment() {
     }
@@ -65,57 +67,43 @@ public class Add_Equipo_Fragment extends Fragment {
         color = requireActivity().findViewById(R.id.txt_color);
         notas = requireActivity().findViewById(R.id.txt_notas);
 
+
+        presenter = new Add_Equipos_Presenter(this);
+
         guardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!nombre.getText().toString().equals("") && !dependencia.getText().toString().equals("") && !modelo.getText().toString().equals("") && !marca.getText().toString().equals("") &&
                     !ns.getText().toString().equals("") && !estado.getText().toString().equals("") && !color.getText().toString().equals("") && !notas.getText().toString().equals(""))
                 {
-                    guardarDatos(nombre.getText().toString(),dependencia.getText().toString(),modelo.getText().toString(),marca.getText().toString(),
+                    presenter.guardarDatos(nombre.getText().toString(),dependencia.getText().toString(),modelo.getText().toString(),marca.getText().toString(),
                             ns.getText().toString(),estado.getText().toString(),color.getText().toString(),notas.getText().toString());
                 }
                 else
                 {
-                    showToast("¡No Dejar Campos Vacios!");
+                    Toast.makeText(requireActivity(), "¡No Dejar Campos Vacios!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
     }
 
-    private void guardarDatos(String nom, String dep, String mod, String mar, String ns, String edo, String col, String not)
+    @Override
+    public void showBar()
     {
         pb.setVisibility(View.VISIBLE);
 
-        Call<POJORespuesta> response = RetroClient.getInstance().getApi().guardarEquipo(nom,dep,mod,mar, ns,col,edo,not);
-
-        response.enqueue(new Callback<POJORespuesta>() {
-            @Override
-            public void onResponse(Call<POJORespuesta> call, Response<POJORespuesta> response) {
-
-                if (response.isSuccessful() && response.code() == 200 && response.body().estado() == TRUE)
-                {
-                    pb.setVisibility(View.INVISIBLE);
-                    showToast(response.body().respuesta());
-                    limpiarContainers();
-                }
-                else
-                {
-                    pb.setVisibility(View.INVISIBLE);
-                    showToast(response.body().respuesta());
-                    limpiarContainers();
-                }
-            }
-            @Override
-            public void onFailure(Call<POJORespuesta> call, Throwable t) {
-                pb.setVisibility(View.INVISIBLE);
-                showToast(t.toString());
-                limpiarContainers();
-            }
-        });
     }
 
-    private void showToast(String mensaje)
+    @Override
+    public void hideBar()
+    {
+        pb.setVisibility(View.INVISIBLE);
+
+    }
+
+    @Override
+    public void onSuccess(String message)
     {
         LayoutInflater inflater = getLayoutInflater();
 
@@ -123,7 +111,30 @@ public class Add_Equipo_Fragment extends Fragment {
 
         TextView txt_mensaje = layout.findViewById(R.id.txt_mensaje);
 
-        txt_mensaje.setText(mensaje);
+        txt_mensaje.setText(message);
+
+        Toast toast = new Toast(requireActivity());
+
+        toast.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL,0,0);
+
+        toast.setDuration(Toast.LENGTH_SHORT);
+
+        toast.setView(layout);
+
+        toast.show();
+
+    }
+
+    @Override
+    public void onFailure(String message)
+    {
+        LayoutInflater inflater = getLayoutInflater();
+
+        View layout = inflater.inflate(R.layout.custom_toast, requireActivity().findViewById(R.id.layout_toast));
+
+        TextView txt_mensaje = layout.findViewById(R.id.txt_mensaje);
+
+        txt_mensaje.setText(message);
 
         Toast toast = new Toast(requireActivity());
 
@@ -136,8 +147,31 @@ public class Add_Equipo_Fragment extends Fragment {
         toast.show();
     }
 
-    private void limpiarContainers()
+    @Override
+    public void onError(String Message)
     {
+        LayoutInflater inflater = getLayoutInflater();
+
+        View layout = inflater.inflate(R.layout.custom_toast, requireActivity().findViewById(R.id.layout_toast));
+
+        TextView txt_mensaje = layout.findViewById(R.id.txt_mensaje);
+
+        txt_mensaje.setText(Message);
+
+        Toast toast = new Toast(requireActivity());
+
+        toast.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL,0,0);
+
+        toast.setDuration(Toast.LENGTH_SHORT);
+
+        toast.setView(layout);
+
+        toast.show();
+
+    }
+
+    @Override
+    public void cleanContainers() {
         nombre.setText("");
         dependencia.setText("");
         modelo.setText("");
@@ -147,5 +181,7 @@ public class Add_Equipo_Fragment extends Fragment {
         color.setText("");
         notas.setText("");
     }
+
+
 
 }

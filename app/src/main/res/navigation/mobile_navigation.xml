@@ -51,12 +51,12 @@
         tools:layout="@layout/fragment_graficas" />
     <fragment
         android:id="@+id/add_Servicios_Fragment"
-        android:name="com.example.servitec.ui.servicios.Add_Servicios_Fragment"
+        android:name="com.example.servitec.ui.servicios.Add.Add_Servicios_Fragment"
         android:label="Añadir Servicios"
         tools:layout="@layout/fragment_add__servicios_" />
     <fragment
         android:id="@+id/add_Equipo_Fragment"
-        android:name="com.example.servitec.ui.equipos.Add_Equipo_Fragment"
+        android:name="com.example.servitec.ui.equipos.add.Add_Equipo_Fragment"
         android:label="Añadir Equipos"
         tools:layout="@layout/fragment_add" />
     <fragment

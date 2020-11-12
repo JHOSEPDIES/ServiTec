@@ -1,4 +1,4 @@
-package com.example.servitec.ui.servicios;
+package com.example.servitec.ui.servicios.Add;
 
 import android.os.Bundle;
 
@@ -17,9 +17,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.servitec.R;
-import com.example.servitec.clases.POJO.POJORespuesta;
-import com.example.servitec.clases.POJO.POJOServicios;
-import com.example.servitec.clases.RetroClient;
+import com.example.servitec.clases.Modelos.POJORespuesta;
+import com.example.servitec.clases.Modelos.POJOServicios;
+import com.example.servitec.API.RetroClient;
 
 import java.util.List;
 
@@ -29,13 +29,15 @@ import retrofit2.Response;
 
 import static java.lang.Boolean.TRUE;
 
-public class Add_Servicios_Fragment extends Fragment {
+public class Add_Servicios_Fragment extends Fragment implements Add_Servicios_View{
 
     private Button btn_guardar,btn_buscar;
 
     private EditText id,nombre,dependencia,modelo,marca,ns,color,servicio;
 
     private ProgressBar pb;
+
+    Add_Servicios_Presenter presenter;
 
     public Add_Servicios_Fragment() {
         // Required empty public constructor
@@ -66,6 +68,8 @@ public class Add_Servicios_Fragment extends Fragment {
 
         pb = requireActivity().findViewById(R.id.pb_add_servicio);
 
+        presenter = new Add_Servicios_Presenter(this);
+
 
         nombre = requireActivity().findViewById(R.id.nombre_comun_servicios);
         dependencia = requireActivity().findViewById(R.id.dependencia_servicios);
@@ -85,7 +89,7 @@ public class Add_Servicios_Fragment extends Fragment {
         else
         {
             String code = extras.getString("codigo");
-            showToast(code);
+            Toast.makeText(requireActivity(), code, Toast.LENGTH_SHORT).show();
         }
 
 
@@ -99,7 +103,7 @@ public class Add_Servicios_Fragment extends Fragment {
                 }
                 else
                 {
-                    showToast("¡Ingrese Código!");
+                    Toast.makeText(requireContext(), "¡Ingrese Código!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -110,12 +114,12 @@ public class Add_Servicios_Fragment extends Fragment {
                 if (!id.getText().toString().equals("") && !nombre.getText().toString().equals("") && !dependencia.getText().toString().equals("") && !modelo.getText().toString().equals("") && !marca.getText().toString().equals("") &&
                         !ns.getText().toString().equals("") && !color.getText().toString().equals("") && !servicio.getText().toString().equals(""))
                 {
-                    guardarDatos(id.getText().toString(), nombre.getText().toString(),dependencia.getText().toString(),modelo.getText().toString(),marca.getText().toString(),
+                    presenter.guardarDatos(id.getText().toString(), nombre.getText().toString(),dependencia.getText().toString(),modelo.getText().toString(),marca.getText().toString(),
                             ns.getText().toString(),color.getText().toString(),servicio.getText().toString());
                 }
                 else
                 {
-                    showToast("¡No Dejar Campos Vacios!");
+                    Toast.makeText(requireContext(), "¡No Dejar Campos Vacios!", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -124,48 +128,7 @@ public class Add_Servicios_Fragment extends Fragment {
 
     }
 
-    private void guardarDatos(String id,String nom, String dep, String mod, String mar, String ns, String col, String ser)
-    {
-        pb.setVisibility(View.VISIBLE);
 
-        Call<POJORespuesta> response = RetroClient.getInstance().getApi().guardarServicio(nom,dep,mod,mar,ns,col,ser);
-
-        response.enqueue(new Callback<POJORespuesta>() {
-            @Override
-            public void onResponse(Call<POJORespuesta> call, Response<POJORespuesta> response)
-            {
-                try
-                {
-                    if (response.isSuccessful() && response.code() == 200 && response.body().estado() == TRUE)
-                    {
-                        pb.setVisibility(View.INVISIBLE);
-                        showToast(response.body().respuesta());
-                        limpiarContainers();
-                    }
-                    else
-                    {
-                        pb.setVisibility(View.INVISIBLE);
-                        showToast(response.body().respuesta());
-                        limpiarContainers();
-                    }
-                }catch (Exception e)
-                {
-                    pb.setVisibility(View.INVISIBLE);
-                    showToast(e.toString());
-                    limpiarContainers();
-                }
-
-            }
-            @Override
-            public void onFailure(Call<POJORespuesta> call, Throwable t)
-            {
-                pb.setVisibility(View.INVISIBLE);
-                showToast(t.toString());
-                limpiarContainers();
-            }
-        });
-
-    }
 
     private void callEquipobyId(String id)
     {
@@ -180,8 +143,9 @@ public class Add_Servicios_Fragment extends Fragment {
                 {
                     if (response.isSuccessful() && response.code() == 200)
                     {
+                        pb.setVisibility(View.INVISIBLE);
+
                         for (POJOServicios elemento : response.body()) {
-                            pb.setVisibility(View.INVISIBLE);
                             nombre.setText(elemento.getNombre());
                             dependencia.setText(elemento.getDependencia());
                             modelo.setText(elemento.getModelo());
@@ -193,15 +157,13 @@ public class Add_Servicios_Fragment extends Fragment {
                     else
                     {
                         pb.setVisibility(View.INVISIBLE);
-                        showToast("No Existe El Equipo");
-                        limpiarContainers();
+                        Toast.makeText(requireContext(), "No Existe El Equipo", Toast.LENGTH_SHORT).show();
                     }
 
                 }catch (Exception e)
                 {
                     pb.setVisibility(View.INVISIBLE);
-                    showToast(e.toString());
-                    limpiarContainers();
+                    Toast.makeText(requireContext(), e.toString(), Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -209,16 +171,28 @@ public class Add_Servicios_Fragment extends Fragment {
             public void onFailure(Call<List<POJOServicios>> call, Throwable t)
             {
                 pb.setVisibility(View.INVISIBLE);
-                showToast(t.toString());
-                limpiarContainers();
-
+                Toast.makeText(requireContext(), t.toString(), Toast.LENGTH_SHORT).show();
             }
         });
 
 
     }
 
-    private void showToast(String mensaje)
+
+    @Override
+    public void showBar()
+    {
+        pb.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideBar()
+    {
+        pb.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void onSuccess(String message)
     {
         LayoutInflater inflater = getLayoutInflater();
 
@@ -226,7 +200,7 @@ public class Add_Servicios_Fragment extends Fragment {
 
         TextView txt_mensaje = layout.findViewById(R.id.txt_mensaje);
 
-        txt_mensaje.setText(mensaje);
+        txt_mensaje.setText(message);
 
         Toast toast = new Toast(requireActivity());
 
@@ -239,7 +213,52 @@ public class Add_Servicios_Fragment extends Fragment {
         toast.show();
     }
 
-    private void limpiarContainers()
+    @Override
+    public void onFailure(String message)
+    {
+        LayoutInflater inflater = getLayoutInflater();
+
+        View layout = inflater.inflate(R.layout.custom_toast, requireActivity().findViewById(R.id.layout_toast));
+
+        TextView txt_mensaje = layout.findViewById(R.id.txt_mensaje);
+
+        txt_mensaje.setText(message);
+
+        Toast toast = new Toast(requireActivity());
+
+        toast.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL,0,0);
+
+        toast.setDuration(Toast.LENGTH_SHORT);
+
+        toast.setView(layout);
+
+        toast.show();
+    }
+
+    @Override
+    public void onError(String Message)
+    {
+        LayoutInflater inflater = getLayoutInflater();
+
+        View layout = inflater.inflate(R.layout.custom_toast, requireActivity().findViewById(R.id.layout_toast));
+
+        TextView txt_mensaje = layout.findViewById(R.id.txt_mensaje);
+
+        txt_mensaje.setText(Message);
+
+        Toast toast = new Toast(requireActivity());
+
+        toast.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL,0,0);
+
+        toast.setDuration(Toast.LENGTH_SHORT);
+
+        toast.setView(layout);
+
+        toast.show();
+    }
+
+    @Override
+    public void cleanContainers()
     {
         id.setText("");
         nombre.setText("");
@@ -250,6 +269,4 @@ public class Add_Servicios_Fragment extends Fragment {
         color.setText("");
         servicio.setText("");
     }
-
-
 }

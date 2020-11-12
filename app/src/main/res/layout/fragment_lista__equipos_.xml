@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.equipos.Lista_Equipos_Fragment">
+    tools:context=".ui.equipos.List.Lista_Equipos_Fragment">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -20,15 +20,5 @@
         </androidx.recyclerview.widget.RecyclerView>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-
-    <ProgressBar
-        android:visibility="invisible"
-        android:id="@+id/pb_equipos"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center">
-
-    </ProgressBar>
 
 </FrameLayout>

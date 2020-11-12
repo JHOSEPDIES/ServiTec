@@ -19,26 +19,9 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import com.anychart.AnyChart;
-import com.anychart.AnyChartView;
-import com.anychart.chart.common.dataentry.DataEntry;
-import com.anychart.chart.common.dataentry.ValueDataEntry;
-import com.anychart.charts.Cartesian;
-import com.anychart.charts.Pie;
-import com.anychart.core.cartesian.series.Column;
-import com.anychart.enums.Align;
-import com.anychart.enums.Anchor;
-import com.anychart.enums.HoverMode;
-import com.anychart.enums.LegendLayout;
-import com.anychart.enums.Position;
-import com.anychart.enums.TooltipPositionMode;
-import com.example.servitec.MainActivity;
 import com.example.servitec.R;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class InicioFragment extends Fragment {
 

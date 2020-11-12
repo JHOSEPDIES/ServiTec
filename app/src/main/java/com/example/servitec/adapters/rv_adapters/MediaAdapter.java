@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.servitec.R;
-import com.example.servitec.clases.POJO.POJOMedia;
+import com.example.servitec.clases.Modelos.POJOMedia;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

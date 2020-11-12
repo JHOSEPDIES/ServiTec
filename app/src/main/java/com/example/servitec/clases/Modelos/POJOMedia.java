@@ -1,4 +1,4 @@
-package com.example.servitec.clases.POJO;
+package com.example.servitec.clases.Modelos;
 
 public class POJOMedia {
 

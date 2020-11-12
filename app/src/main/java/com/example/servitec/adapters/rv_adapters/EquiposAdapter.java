@@ -9,15 +9,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.servitec.R;
-import com.example.servitec.clases.POJO.POJOEquipos;
+import com.example.servitec.clases.Modelos.POJOEquipos;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class EquiposAdapter extends RecyclerView.Adapter<EquiposAdapter.EquiposViewHolder>{
 
-    public ArrayList<POJOEquipos> equipos;
+    public List<POJOEquipos> equipos;
 
-    public EquiposAdapter (ArrayList<POJOEquipos> equipo)
+    public EquiposAdapter (List<POJOEquipos> equipo)
     {
         this.equipos = equipo;
     }
@@ -68,7 +69,7 @@ public class EquiposAdapter extends RecyclerView.Adapter<EquiposAdapter.EquiposV
         }
     }
 
-    public void actualizar(ArrayList<POJOEquipos> ListaEquipo)
+    public void actualizar(List<POJOEquipos> ListaEquipo)
     {
         if (ListaEquipo == null) return;
 

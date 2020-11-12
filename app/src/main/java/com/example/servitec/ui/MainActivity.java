@@ -1,4 +1,4 @@
-package com.example.servitec;
+package com.example.servitec.ui;
 
 import android.content.Intent;
 import android.os.Build;
@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.Menu;
 import android.widget.Toast;
 
+import com.example.servitec.R;
 import com.example.servitec.ui.login.LoginActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;

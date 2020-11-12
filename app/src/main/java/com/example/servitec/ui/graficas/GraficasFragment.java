@@ -23,8 +23,8 @@ import com.anychart.enums.HoverMode;
 import com.anychart.enums.Position;
 import com.anychart.enums.TooltipPositionMode;
 import com.example.servitec.R;
-import com.example.servitec.clases.POJO.POJOGraficas;
-import com.example.servitec.clases.RetroClient;
+import com.example.servitec.clases.Modelos.POJOGraficas;
+import com.example.servitec.API.RetroClient;
 
 import java.util.ArrayList;
 import java.util.List;

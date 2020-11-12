@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.servicios.Lista_Servicios_Fragment">
+    tools:context=".ui.servicios.List.Lista_Servicios_Fragment">
 
     <!-- TODO: Update blank fragment layout -->
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -17,12 +17,5 @@
             android:layout_height="wrap_content"/>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-    <ProgressBar
-        android:id="@+id/pbserv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:visibility="invisible"/>
 
 </FrameLayout>

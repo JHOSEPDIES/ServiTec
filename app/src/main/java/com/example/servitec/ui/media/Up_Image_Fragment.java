@@ -22,8 +22,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.servitec.R;
-import com.example.servitec.clases.POJO.POJORespuesta;
-import com.example.servitec.clases.RetroClient;
+import com.example.servitec.clases.Modelos.POJORespuesta;
+import com.example.servitec.API.RetroClient;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

@@ -19,8 +19,8 @@ import android.widget.Toast;
 
 import com.example.servitec.R;
 import com.example.servitec.adapters.rv_adapters.MediaAdapter;
-import com.example.servitec.clases.POJO.POJOMedia;
-import com.example.servitec.clases.RetroClient;
+import com.example.servitec.clases.Modelos.POJOMedia;
+import com.example.servitec.API.RetroClient;
 
 import java.util.ArrayList;
 import java.util.List;

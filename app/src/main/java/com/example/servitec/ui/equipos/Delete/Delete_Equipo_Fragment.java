@@ -1,4 +1,4 @@
-package com.example.servitec.ui.equipos;
+package com.example.servitec.ui.equipos.Delete;
 
 import android.os.Bundle;
 
@@ -17,8 +17,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.servitec.R;
-import com.example.servitec.clases.POJO.POJORespuesta;
-import com.example.servitec.clases.RetroClient;
+import com.example.servitec.clases.Modelos.POJORespuesta;
+import com.example.servitec.API.RetroClient;
+import com.example.servitec.ui.equipos.add.Add_Equipos_Presenter;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,13 +27,15 @@ import retrofit2.Response;
 
 import static java.lang.Boolean.TRUE;
 
-public class Delete_Equipo_Fragment extends Fragment {
+public class Delete_Equipo_Fragment extends Fragment implements Delete_Equipos_View{
 
     private ProgressBar pb;
 
     private Button btn_eliminar;
 
     private EditText tv_codigo;
+
+    Delete_Equipo_Presenter presenter;
 
     public Delete_Equipo_Fragment() {
         // Required empty public constructor
@@ -61,66 +64,37 @@ public class Delete_Equipo_Fragment extends Fragment {
 
         tv_codigo = requireActivity().findViewById(R.id.txt_code_delete);
 
+        presenter = new Delete_Equipo_Presenter(this);
+
         btn_eliminar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!tv_codigo.getText().toString().equals(""))
                 {
-                    eliminarEquipo(tv_codigo.getText().toString());
+                    presenter.eliminarEquipo(tv_codigo.getText().toString());
                 }
                 else
                 {
-                    showToast("¡No deja Campos Vacios!");
+                    Toast.makeText(requireActivity(), "¡No deja Campos Vacios!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
     }
 
-    private void eliminarEquipo(String id)
-    {
-        pb.setVisibility(View.VISIBLE);
 
-        Call<POJORespuesta> response = RetroClient.getInstance().getApi().eliminarEquipo(id);
-
-        response.enqueue(new Callback<POJORespuesta>() {
-            @Override
-            public void onResponse(Call<POJORespuesta> call, Response<POJORespuesta> response) {
-
-                if (response.isSuccessful() && response.code() == 200 && response.body().estado() == TRUE)
-                {
-                    try
-                    {
-                        showToast(response.body().respuesta());
-                        pb.setVisibility(View.INVISIBLE);
-                        cleanContainer();
-                    }catch (Exception e)
-                    {
-                        showToast("Error en el EndPoint");
-                        pb.setVisibility(View.INVISIBLE);
-                        cleanContainer();
-                    }
-                }
-                else
-                {
-                    showToast(response.body().respuesta());
-                    pb.setVisibility(View.INVISIBLE);
-                    cleanContainer();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<POJORespuesta> call, Throwable t) {
-                showToast(t.toString());
-                pb.setVisibility(View.INVISIBLE);
-                cleanContainer();
-            }
-        });
-
+    @Override
+    public void showBar() {
 
     }
 
-    private void showToast(String mensaje)
+    @Override
+    public void hideBar() {
+
+    }
+
+    @Override
+    public void onSuccess(String message)
     {
         LayoutInflater inflater = getLayoutInflater();
 
@@ -128,7 +102,7 @@ public class Delete_Equipo_Fragment extends Fragment {
 
         TextView txt_mensaje = layout.findViewById(R.id.txt_mensaje);
 
-        txt_mensaje.setText(mensaje);
+        txt_mensaje.setText(message);
 
         Toast toast = new Toast(requireActivity());
 
@@ -141,7 +115,52 @@ public class Delete_Equipo_Fragment extends Fragment {
         toast.show();
     }
 
-    private void cleanContainer()
+    @Override
+    public void onFail(String message)
+    {
+        LayoutInflater inflater = getLayoutInflater();
+
+        View layout = inflater.inflate(R.layout.custom_toast, requireActivity().findViewById(R.id.layout_toast));
+
+        TextView txt_mensaje = layout.findViewById(R.id.txt_mensaje);
+
+        txt_mensaje.setText(message);
+
+        Toast toast = new Toast(requireActivity());
+
+        toast.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL,0,0);
+
+        toast.setDuration(Toast.LENGTH_SHORT);
+
+        toast.setView(layout);
+
+        toast.show();
+    }
+
+    @Override
+    public void onError(String Message)
+    {
+        LayoutInflater inflater = getLayoutInflater();
+
+        View layout = inflater.inflate(R.layout.custom_toast, requireActivity().findViewById(R.id.layout_toast));
+
+        TextView txt_mensaje = layout.findViewById(R.id.txt_mensaje);
+
+        txt_mensaje.setText(Message);
+
+        Toast toast = new Toast(requireActivity());
+
+        toast.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL,0,0);
+
+        toast.setDuration(Toast.LENGTH_SHORT);
+
+        toast.setView(layout);
+
+        toast.show();
+    }
+
+    @Override
+    public void cleanContainers()
     {
         tv_codigo.setText("");
     }

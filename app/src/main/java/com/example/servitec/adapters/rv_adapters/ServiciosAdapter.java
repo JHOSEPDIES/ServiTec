@@ -9,15 +9,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.servitec.R;
-import com.example.servitec.clases.POJO.POJOServiciosGet;
+import com.example.servitec.clases.Modelos.POJOServiciosGet;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ServiciosAdapter extends RecyclerView.Adapter<ServiciosAdapter.ServiciosViewHolder> {
 
-    public ArrayList<POJOServiciosGet> servicios;
+    public List<POJOServiciosGet> servicios;
 
-    public ServiciosAdapter (ArrayList<POJOServiciosGet> servicio)
+    public ServiciosAdapter (List<POJOServiciosGet> servicio)
     {
         this.servicios = servicio;
     }
@@ -64,14 +65,5 @@ public class ServiciosAdapter extends RecyclerView.Adapter<ServiciosAdapter.Serv
             estado = itemView.findViewById(R.id.tv_estado_serv);
             serv = itemView.findViewById(R.id.tv_servicio_serv);
         }
-    }
-
-    public void actualizar(ArrayList<POJOServiciosGet> ListaServicio)
-    {
-        if (ListaServicio == null) return;
-
-        this.servicios = ListaServicio;
-
-        notifyDataSetChanged();
     }
 }
