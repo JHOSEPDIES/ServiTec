@@ -43,7 +43,7 @@
 
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_find_servicios"
+                    android:id="@+id/btn_find_serv"
                     android:layout_marginStart="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

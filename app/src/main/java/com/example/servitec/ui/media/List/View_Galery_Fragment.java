@@ -1,5 +1,6 @@
-package com.example.servitec.ui.media;
+package com.example.servitec.ui.media.List;
 
+import android.icu.lang.UCharacter;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -20,19 +21,12 @@ import android.widget.Toast;
 import com.example.servitec.R;
 import com.example.servitec.adapters.rv_adapters.MediaAdapter;
 import com.example.servitec.clases.Modelos.POJOMedia;
-import com.example.servitec.API.RetroClient;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+public class View_Galery_Fragment extends Fragment implements List_Galery_View{
 
-
-public class View_Galery_Fragment extends Fragment {
-
-    ArrayList<POJOMedia> media = new ArrayList<>();
+    List<POJOMedia> media;
 
     private RecyclerView listamedia;
 
@@ -41,6 +35,8 @@ public class View_Galery_Fragment extends Fragment {
     private SwipeRefreshLayout swp;
 
     private ProgressBar pb;
+
+    List_Galery_Presentador presentador;
 
     public View_Galery_Fragment() {
         // Required empty public constructor
@@ -70,71 +66,21 @@ public class View_Galery_Fragment extends Fragment {
 
         swp = requireActivity().findViewById(R.id.swp_media);
 
+        StaggeredGridLayoutManager layoutManager=new  StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
 
-        StaggeredGridLayoutManager sgl = new StaggeredGridLayoutManager (2,StaggeredGridLayoutManager.VERTICAL);
-        listamedia.setLayoutManager(sgl);
+        listamedia.setLayoutManager(layoutManager);
 
-        inicializarAdaptador();
+        presentador = new List_Galery_Presentador(this);
 
-        callMedia();
+        presentador.callMedia();
 
         swp.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                callMedia();
-                swp.setRefreshing(false);
+                presentador.callMedia();
             }
         });
 
-    }
-
-    private void callMedia() {
-
-        pb.setVisibility(View.VISIBLE);
-
-        Call<List<POJOMedia>> response = RetroClient.getInstance().getApi().getmedia();
-
-        response.enqueue(new Callback<List<POJOMedia>>() {
-            @Override
-            public void onResponse(Call<List<POJOMedia>> call, Response<List<POJOMedia>> response) {
-
-                if (response.isSuccessful() && response.code() == 200)
-                {
-
-                    media = new ArrayList<>();
-
-                    for (POJOMedia elemento : response.body())
-                    {
-                        media.add(new POJOMedia(""+elemento.getLocation()));
-                    }
-                    showList(media);
-                    pb.setVisibility(View.INVISIBLE);
-                }
-                else
-                {
-                    showToast("Error en el EndPoint");
-                    pb.setVisibility(View.INVISIBLE);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<POJOMedia>> call, Throwable t) {
-                    showToast(t.toString());
-                    pb.setVisibility(View.INVISIBLE);
-            }
-        });
-
-    }
-
-    private void inicializarAdaptador()
-    {
-        adapter = new MediaAdapter(media);
-        listamedia.setAdapter(adapter);
-    }
-
-    public void showList(ArrayList<POJOMedia> lista)
-    {
-        adapter.actualizar(lista);
     }
 
     private void showToast(String mensaje)
@@ -158,4 +104,30 @@ public class View_Galery_Fragment extends Fragment {
         toast.show();
     }
 
+    @Override
+    public void showBar()
+    {
+        swp.setRefreshing(true);
+    }
+
+    @Override
+    public void hideBar()
+    {
+        swp.setRefreshing(false);
+    }
+
+    @Override
+    public void onErrorLoad(String Message)
+    {
+        showToast(Message);
+    }
+
+    @Override
+    public void onGetResult(List<POJOMedia> medias)
+    {
+        adapter = new MediaAdapter(medias);
+        adapter.notifyDataSetChanged();
+        listamedia.setAdapter(adapter);
+        media = medias;
+    }
 }

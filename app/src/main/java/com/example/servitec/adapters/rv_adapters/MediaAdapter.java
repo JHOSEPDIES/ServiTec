@@ -15,13 +15,14 @@ import com.example.servitec.clases.Modelos.POJOMedia;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.MediaViewHolder> {
 
-    ArrayList<POJOMedia> medias ;
+    List<POJOMedia> medias ;
     private Context context;
 
-    public MediaAdapter (ArrayList<POJOMedia> media)
+    public MediaAdapter (List<POJOMedia> media)
     {
         this.medias = media;
     }

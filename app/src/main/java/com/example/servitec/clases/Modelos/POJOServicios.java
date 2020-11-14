@@ -2,26 +2,26 @@ package com.example.servitec.clases.Modelos;
 
 public class POJOServicios {
 
-    String nombre,dependencia,modelo,marca,sn,color;
+    String nombre_comun,dependencia,modelo,marca,ns,color;
 
     public POJOServicios() {
     }
 
-    public POJOServicios(String nombre, String dependencia, String modelo, String marca, String sn, String color) {
-        this.nombre = nombre;
+    public POJOServicios(String nombre_comun, String dependencia, String modelo, String marca, String ns, String color) {
+        this.nombre_comun = nombre_comun;
         this.dependencia = dependencia;
         this.modelo = modelo;
         this.marca = marca;
-        this.sn = sn;
+        this.ns = ns;
         this.color = color;
     }
 
     public String getNombre() {
-        return nombre;
+        return nombre_comun;
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        this.nombre_comun = nombre;
     }
 
     public String getDependencia() {
@@ -49,11 +49,11 @@ public class POJOServicios {
     }
 
     public String getSn() {
-        return sn;
+        return ns;
     }
 
     public void setSn(String sn) {
-        this.sn = sn;
+        this.ns = sn;
     }
 
     public String getColor() {

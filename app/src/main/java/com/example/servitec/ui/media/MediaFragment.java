@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 
 import com.example.servitec.R;
 import com.example.servitec.adapters.PageAdapter;
+import com.example.servitec.ui.media.Add.Up_Image_Fragment;
+import com.example.servitec.ui.media.List.View_Galery_Fragment;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;

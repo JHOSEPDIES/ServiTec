@@ -64,7 +64,7 @@ public class Add_Servicios_Fragment extends Fragment implements Add_Servicios_Vi
 
         btn_guardar = requireActivity().findViewById(R.id.btn_guardar_servicio);
 
-        btn_buscar = requireActivity().findViewById(R.id.btn_find_servicios);
+        btn_buscar = requireActivity().findViewById(R.id.btn_find_serv);
 
         pb = requireActivity().findViewById(R.id.pb_add_servicio);
 
@@ -84,7 +84,6 @@ public class Add_Servicios_Fragment extends Fragment implements Add_Servicios_Vi
 
         if (extras == null)
         {
-            return;
         }
         else
         {
@@ -99,7 +98,7 @@ public class Add_Servicios_Fragment extends Fragment implements Add_Servicios_Vi
 
                 if (!id.getText().toString().equals(""))
                 {
-                    callEquipobyId(id.getText().toString());
+                     presenter.callEquipobyId(id.getText().toString());
                 }
                 else
                 {
@@ -114,7 +113,7 @@ public class Add_Servicios_Fragment extends Fragment implements Add_Servicios_Vi
                 if (!id.getText().toString().equals("") && !nombre.getText().toString().equals("") && !dependencia.getText().toString().equals("") && !modelo.getText().toString().equals("") && !marca.getText().toString().equals("") &&
                         !ns.getText().toString().equals("") && !color.getText().toString().equals("") && !servicio.getText().toString().equals(""))
                 {
-                    presenter.guardarDatos(id.getText().toString(), nombre.getText().toString(),dependencia.getText().toString(),modelo.getText().toString(),marca.getText().toString(),
+                    presenter.guardarDatos(nombre.getText().toString(),dependencia.getText().toString(),modelo.getText().toString(),marca.getText().toString(),
                             ns.getText().toString(),color.getText().toString(),servicio.getText().toString());
                 }
                 else
@@ -125,56 +124,6 @@ public class Add_Servicios_Fragment extends Fragment implements Add_Servicios_Vi
 
 
         });
-
-    }
-
-
-
-    private void callEquipobyId(String id)
-    {
-        pb.setVisibility(View.VISIBLE);
-
-        Call<List<POJOServicios>> response = RetroClient.getInstance().getApi().getequipobyIdServicio(id);
-
-        response.enqueue(new Callback<List<POJOServicios>>() {
-            @Override
-            public void onResponse(Call<List<POJOServicios>> call, Response<List<POJOServicios>> response) {
-                try
-                {
-                    if (response.isSuccessful() && response.code() == 200)
-                    {
-                        pb.setVisibility(View.INVISIBLE);
-
-                        for (POJOServicios elemento : response.body()) {
-                            nombre.setText(elemento.getNombre());
-                            dependencia.setText(elemento.getDependencia());
-                            modelo.setText(elemento.getModelo());
-                            marca.setText(elemento.getMarca());
-                            ns.setText(elemento.getSn());
-                            color.setText(elemento.getColor());
-                        }
-                    }
-                    else
-                    {
-                        pb.setVisibility(View.INVISIBLE);
-                        Toast.makeText(requireContext(), "No Existe El Equipo", Toast.LENGTH_SHORT).show();
-                    }
-
-                }catch (Exception e)
-                {
-                    pb.setVisibility(View.INVISIBLE);
-                    Toast.makeText(requireContext(), e.toString(), Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<POJOServicios>> call, Throwable t)
-            {
-                pb.setVisibility(View.INVISIBLE);
-                Toast.makeText(requireContext(), t.toString(), Toast.LENGTH_SHORT).show();
-            }
-        });
-
 
     }
 
@@ -255,6 +204,16 @@ public class Add_Servicios_Fragment extends Fragment implements Add_Servicios_Vi
         toast.setView(layout);
 
         toast.show();
+    }
+
+    @Override
+    public void getResult(String nom, String dep, String mod, String mar, String sn, String col) {
+        nombre.setText(nom);
+        dependencia.setText(dep);
+        modelo.setText(mod);
+        marca.setText(mar);
+        ns.setText(sn);
+        color.setText(col);
     }
 
     @Override

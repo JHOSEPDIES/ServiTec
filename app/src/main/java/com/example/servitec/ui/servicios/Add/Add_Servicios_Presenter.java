@@ -1,9 +1,12 @@
 package com.example.servitec.ui.servicios.Add;
 
-import android.view.View;
+
 
 import com.example.servitec.API.RetroClient;
 import com.example.servitec.clases.Modelos.POJORespuesta;
+import com.example.servitec.clases.Modelos.POJOServicios;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -19,7 +22,7 @@ public class Add_Servicios_Presenter {
         this.view = view;
     }
 
-     void guardarDatos(String id,String nom, String dep, String mod, String mar, String ns, String col, String ser)
+     void guardarDatos(String nom, String dep, String mod, String mar, String ns, String col, String ser)
     {
         view.showBar();
 
@@ -61,4 +64,52 @@ public class Add_Servicios_Presenter {
         });
 
     }
+
+    void callEquipobyId(String id)
+    {
+        view.showBar();
+
+        Call<List<POJOServicios>> response = RetroClient.getInstance().getApi().getequipobyIdServicio(id);
+
+        response.enqueue(new Callback<List<POJOServicios>>() {
+            @Override
+            public void onResponse(Call<List<POJOServicios>> call, Response<List<POJOServicios>> response) {
+                try
+                {
+                    if (response.isSuccessful() && response.code() == 200)
+                    {
+                        view.hideBar();
+
+                        for (POJOServicios elemento : response.body()) {
+                            view.getResult(elemento.getNombre(),elemento.getDependencia(),
+                                    elemento.getModelo(), elemento.getMarca(), elemento.getSn(),
+                                    elemento.getColor()
+                                    );
+                        }
+                    }
+                    else
+                    {
+                        view.hideBar();
+                        view.onError("no Existe el Equipo");
+                    }
+
+                }catch (Exception e)
+                {
+                    view.hideBar();
+                    view.onError("no Existe el Equipo");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<POJOServicios>> call, Throwable t)
+            {
+                view.hideBar();
+                view.onFailure(t.toString());
+            }
+        });
+
+
+    }
+
+
 }

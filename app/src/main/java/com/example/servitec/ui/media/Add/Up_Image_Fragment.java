@@ -1,4 +1,4 @@
-package com.example.servitec.ui.media;
+package com.example.servitec.ui.media.Add;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -35,13 +35,14 @@ import retrofit2.Response;
 import static android.app.Activity.RESULT_OK;
 
 
-public class Up_Image_Fragment extends Fragment {
+public class Up_Image_Fragment extends Fragment implements Add_Image_View{
 
     private static final int IMG_REQUEST = 21;
     private Bitmap bitmap;
     private ImageView imageView;
     private Button btnSelectImage, btnUploadImage;
     private ProgressBar progressBar;
+    Add_Image_Presentador presentador;
 
     public Up_Image_Fragment() {
         // Required empty public constructor
@@ -68,6 +69,8 @@ public class Up_Image_Fragment extends Fragment {
         btnSelectImage = requireActivity().findViewById(R.id.btnSelectImage);
         btnUploadImage = requireActivity().findViewById(R.id.btnUploadImage);
         progressBar = requireActivity().findViewById(R.id.pb_media_up);
+        presentador = new Add_Image_Presentador(this);
+
 
         btnSelectImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,44 +126,8 @@ public class Up_Image_Fragment extends Fragment {
         byte[] imageInByte = byteArrayOutputStream.toByteArray();
         String encodedImage =  Base64.encodeToString(imageInByte,Base64.DEFAULT);
 
-
-        Call<POJORespuesta> call = RetroClient.getInstance().getApi().uploadImage(encodedImage);
-
-        call.enqueue(new Callback<POJORespuesta>() {
-            @Override
-            public void onResponse(Call<POJORespuesta> call, Response<POJORespuesta> response) {
-
-                try
-                {
-                    if (response.isSuccessful() && response.code() == 200 && response.body().estado() == Boolean.TRUE)
-                    {
-                        showToast(response.body().respuesta());
-                        progressBar.setVisibility(View.INVISIBLE);
-                        btnUploadImage.setEnabled(true);
-                    }
-                    else
-                    {
-                        showToast(response.body().respuesta());
-                        progressBar.setVisibility(View.INVISIBLE);
-                        btnUploadImage.setEnabled(true);
-                    }
-                }
-                catch (Exception e)
-                {
-                    showToast(e.toString());
-                    progressBar.setVisibility(View.INVISIBLE);
-                    btnUploadImage.setEnabled(true);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<POJORespuesta> call, Throwable t)
-            {
-                showToast(t.toString());
-                progressBar.setVisibility(View.INVISIBLE);
-                btnUploadImage.setEnabled(true);
-            }
-        });
+        //HERE
+        presentador.subirImagen(encodedImage);
 
     }
 
@@ -183,5 +150,41 @@ public class Up_Image_Fragment extends Fragment {
         toast.setView(layout);
 
         toast.show();
+    }
+
+    @Override
+    public void showBar()
+    {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideBar()
+    {
+        progressBar.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void onSuccess(String message)
+    {
+        showToast(message);
+    }
+
+    @Override
+    public void onFailure(String message)
+    {
+        showToast(message);
+    }
+
+    @Override
+    public void onError(String Message)
+    {
+        showToast(Message);
+    }
+
+    @Override
+    public void enable(Boolean on)
+    {
+        btnUploadImage.setEnabled(on);
     }
 }
