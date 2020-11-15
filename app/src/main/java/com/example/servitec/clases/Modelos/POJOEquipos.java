@@ -3,7 +3,7 @@ package com.example.servitec.clases.Modelos;
 public class POJOEquipos {
 
     String nombre_comun,dependencia,modelo,marca,ns,color,estado,notas;
-
+    private boolean expanded;
     public POJOEquipos() {
     }
 
@@ -16,6 +16,7 @@ public class POJOEquipos {
         this.color = color;
         this.estado = estado;
         this.notas = notas;
+        this.expanded = false;
     }
 
     public String getNotas() {
@@ -80,6 +81,14 @@ public class POJOEquipos {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public boolean isExpanded() {
+        return expanded;
+    }
+
+    public void setExpanded(boolean expanded) {
+        this.expanded = expanded;
     }
 
 }

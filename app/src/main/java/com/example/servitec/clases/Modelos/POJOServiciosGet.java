@@ -2,19 +2,16 @@ package com.example.servitec.clases.Modelos;
 
 public class POJOServiciosGet {
 
-    String nombre_comun,dependencia,modelo,marca,ns,color,servicio;
-
+    String nombre_comun,servicio,fecha_registro;
+    private boolean expanded;
     public POJOServiciosGet() {
     }
 
-    public POJOServiciosGet(String nombre, String dependencia, String modelo, String marca, String ns, String color, String servicio) {
+    public POJOServiciosGet(String nombre,  String servicio, String fecha_registro) {
         this.nombre_comun = nombre;
-        this.dependencia = dependencia;
-        this.modelo = modelo;
-        this.marca = marca;
-        this.ns = ns;
-        this.color = color;
         this.servicio = servicio;
+        this.fecha_registro = fecha_registro;
+        this.expanded = false;
     }
 
     public String getNombre() {
@@ -25,51 +22,27 @@ public class POJOServiciosGet {
         this.nombre_comun = nombre;
     }
 
-    public String getDependencia() {
-        return dependencia;
-    }
-
-    public void setDependencia(String dependencia) {
-        this.dependencia = dependencia;
-    }
-
-    public String getModelo() {
-        return modelo;
-    }
-
-    public void setModelo(String modelo) {
-        this.modelo = modelo;
-    }
-
-    public String getMarca() {
-        return marca;
-    }
-
-    public void setMarca(String marca) {
-        this.marca = marca;
-    }
-
-    public String getSn() {
-        return ns;
-    }
-
-    public void setSn(String sn) {
-        this.ns = sn;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
     public String getServicio() {
         return servicio;
     }
 
     public void setServicio(String servicio) {
         this.servicio = servicio;
+    }
+
+    public String getFecha_registro() {
+        return fecha_registro;
+    }
+
+    public void setFecha_registro(String fecha_registro) {
+        this.fecha_registro = fecha_registro;
+    }
+
+    public void setExpanded(boolean expanded) {
+        this.expanded = expanded;
+    }
+
+    public boolean isExpanded() {
+        return expanded;
     }
 }

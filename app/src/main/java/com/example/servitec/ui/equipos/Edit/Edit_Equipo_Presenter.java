@@ -36,22 +36,15 @@ public class Edit_Equipo_Presenter {
             {
                 try
                 {
-                    if (response.isSuccessful() && response.code() == 200)
+                    if (response.isSuccessful() && response.code() == 200 && response.body() != null)
                     {
-
-                        for (POJOEquipos elemento : response.body())
-                        {
-                            nombre.setText(elemento.getNombre());
-                            dependencia.setText(elemento.getDependencia());
-                            modelo.setText(elemento.getModelo());
-                            marca.setText(elemento.getMarca());
-                            ns.setText(elemento.getSn());
-                            color.setText(elemento.getColor());
-                            estado.setText(elemento.getEstado());
-                            notas.setText(elemento.getNotas());
-                        }
-
                         view.hideBar();
+                        for (POJOEquipos elemento: response.body())
+                        {
+                        view.getValues(elemento.getNombre(),elemento.getDependencia(),
+                                elemento.getModelo(), elemento.getMarca(), elemento.getSn(),
+                                elemento.getColor(),elemento.getEstado(),elemento.getNotas());
+                        }
                     }
                     else
                     {

@@ -1,18 +1,21 @@
 package com.example.servitec.adapters.rv_adapters;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.servitec.R;
 import com.example.servitec.clases.Modelos.POJOServiciosGet;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class ServiciosAdapter extends RecyclerView.Adapter<ServiciosAdapter.ServiciosViewHolder> {
 
@@ -26,7 +29,7 @@ public class ServiciosAdapter extends RecyclerView.Adapter<ServiciosAdapter.Serv
     @NonNull
     @Override
     public ServiciosViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.rvl_servicios,parent,false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_servicios_edit,parent,false);
         return new ServiciosViewHolder(v);
     }
 
@@ -36,12 +39,29 @@ public class ServiciosAdapter extends RecyclerView.Adapter<ServiciosAdapter.Serv
         final POJOServiciosGet servicio = servicios.get(position);
 
         holder.nombre.setText(servicio.getNombre());
-        holder.dependencia.setText(servicio.getDependencia());
-        holder.modelo.setText(servicio.getModelo());
-        holder.marca.setText(servicio.getMarca());
-        holder.ns.setText(servicio.getSn());
-        holder.color.setText(servicio.getColor());
         holder.serv.setText(servicio.getServicio());
+        holder.fecha.setText(servicio.getFecha_registro());
+        holder.card.setBackgroundColor(getRandomColorCode());
+
+        boolean isExpanded = servicios.get(position).isExpanded();
+        holder.expandableLayout.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
+
+        holder.nombre.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                servicio.setExpanded(!servicio.isExpanded());
+                notifyDataSetChanged();
+            }
+        });
+
+    }
+
+    public int getRandomColorCode(){
+
+        Random random = new Random();
+
+        return Color.argb(255, random.nextInt(256), random.nextInt(256),random.nextInt(256));
+
     }
 
     @Override
@@ -51,19 +71,17 @@ public class ServiciosAdapter extends RecyclerView.Adapter<ServiciosAdapter.Serv
 
     public static class ServiciosViewHolder extends RecyclerView.ViewHolder{
 
-        private TextView nombre,dependencia,modelo,marca,ns,color,estado,serv;
-
+        private TextView nombre,serv,fecha;
+        LinearLayout expandableLayout;
+        CardView card;
         public ServiciosViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            nombre = itemView.findViewById(R.id.tv_nombre_serv);
-            dependencia = itemView.findViewById(R.id.tv_dependencia_serv);
-            modelo = itemView.findViewById(R.id.tv_modelo_serv);
-            marca = itemView.findViewById(R.id.tv_marca_serv);
-            ns = itemView.findViewById(R.id.tv_ns_serv);
-            color = itemView.findViewById(R.id.tv_color_serv);
-            estado = itemView.findViewById(R.id.tv_estado_serv);
-            serv = itemView.findViewById(R.id.tv_servicio_serv);
+            nombre = itemView.findViewById(R.id.tv_nom_serv);
+            serv = itemView.findViewById(R.id.tv_serv_ser);
+            fecha = itemView.findViewById(R.id.tv_fecha_serv);
+            expandableLayout = itemView.findViewById(R.id.expandableLayout_servicios);
+            card = itemView.findViewById(R.id.card_servicios);
         }
     }
 }

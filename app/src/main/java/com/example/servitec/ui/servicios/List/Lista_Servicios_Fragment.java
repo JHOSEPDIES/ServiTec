@@ -87,6 +87,26 @@ public class Lista_Servicios_Fragment extends Fragment implements List_Servicios
     }
 
 
+    private void showToast(String message)
+    {
+        LayoutInflater inflater = getLayoutInflater();
+
+        View layout = inflater.inflate(R.layout.custom_toast, requireActivity().findViewById(R.id.layout_toast));
+
+        TextView txt_mensaje = layout.findViewById(R.id.txt_mensaje);
+
+        txt_mensaje.setText(message);
+
+        Toast toast = new Toast(requireActivity());
+
+        toast.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL,0,0);
+
+        toast.setDuration(Toast.LENGTH_SHORT);
+
+        toast.setView(layout);
+
+        toast.show();
+    }
     @Override
     public void showBar()
     {
@@ -102,23 +122,7 @@ public class Lista_Servicios_Fragment extends Fragment implements List_Servicios
     @Override
     public void onErrorLoad(String Message)
     {
-        LayoutInflater inflater = getLayoutInflater();
-
-        View layout = inflater.inflate(R.layout.custom_toast, requireActivity().findViewById(R.id.layout_toast));
-
-        TextView txt_mensaje = layout.findViewById(R.id.txt_mensaje);
-
-        txt_mensaje.setText(Message);
-
-        Toast toast = new Toast(requireActivity());
-
-        toast.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL,0,0);
-
-        toast.setDuration(Toast.LENGTH_SHORT);
-
-        toast.setView(layout);
-
-        toast.show();
+        showToast(Message);
     }
 
     @Override

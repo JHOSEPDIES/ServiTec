@@ -99,6 +99,26 @@ public class Edit_Equipo_Fragment extends Fragment implements Edit_Equipo_View{
         notas = requireActivity().findViewById(R.id.notas_editar);
     }
 
+    private void showToast(String message)
+    {
+        LayoutInflater inflater = getLayoutInflater();
+
+        View layout = inflater.inflate(R.layout.custom_toast, requireActivity().findViewById(R.id.layout_toast));
+
+        TextView txt_mensaje = layout.findViewById(R.id.txt_mensaje);
+
+        txt_mensaje.setText(message);
+
+        Toast toast = new Toast(requireActivity());
+
+        toast.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL,0,0);
+
+        toast.setDuration(Toast.LENGTH_SHORT);
+
+        toast.setView(layout);
+
+        toast.show();
+    }
     @Override
     public void showBar()
     {
@@ -114,67 +134,19 @@ public class Edit_Equipo_Fragment extends Fragment implements Edit_Equipo_View{
     @Override
     public void onSuccess(String message)
     {
-        LayoutInflater inflater = getLayoutInflater();
-
-        View layout = inflater.inflate(R.layout.custom_toast, requireActivity().findViewById(R.id.layout_toast));
-
-        TextView txt_mensaje = layout.findViewById(R.id.txt_mensaje);
-
-        txt_mensaje.setText(message);
-
-        Toast toast = new Toast(requireActivity());
-
-        toast.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL,0,0);
-
-        toast.setDuration(Toast.LENGTH_SHORT);
-
-        toast.setView(layout);
-
-        toast.show();
+        showToast(message);
     }
 
     @Override
     public void onFail(String message)
     {
-        LayoutInflater inflater = getLayoutInflater();
-
-        View layout = inflater.inflate(R.layout.custom_toast, requireActivity().findViewById(R.id.layout_toast));
-
-        TextView txt_mensaje = layout.findViewById(R.id.txt_mensaje);
-
-        txt_mensaje.setText(message);
-
-        Toast toast = new Toast(requireActivity());
-
-        toast.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL,0,0);
-
-        toast.setDuration(Toast.LENGTH_SHORT);
-
-        toast.setView(layout);
-
-        toast.show();
+        showToast(message);
     }
 
     @Override
     public void onError(String Message)
     {
-        LayoutInflater inflater = getLayoutInflater();
-
-        View layout = inflater.inflate(R.layout.custom_toast, requireActivity().findViewById(R.id.layout_toast));
-
-        TextView txt_mensaje = layout.findViewById(R.id.txt_mensaje);
-
-        txt_mensaje.setText(Message);
-
-        Toast toast = new Toast(requireActivity());
-
-        toast.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL,0,0);
-
-        toast.setDuration(Toast.LENGTH_SHORT);
-
-        toast.setView(layout);
-
-        toast.show();
+        showToast(Message);
     }
 
     @Override
@@ -188,5 +160,17 @@ public class Edit_Equipo_Fragment extends Fragment implements Edit_Equipo_View{
         estado.setText("");
         color.setText("");
         notas.setText("");
+    }
+
+    @Override
+    public void getValues(String nom, String dep, String mod, String mar, String sn, String col, String est, String not) {
+        nombre.setText(nom);
+        dependencia.setText(dep);
+        modelo.setText(mod);
+        marca.setText(mar);
+        ns.setText(sn);
+        estado.setText(est);
+        color.setText(col);
+        notas.setText(not);
     }
 }

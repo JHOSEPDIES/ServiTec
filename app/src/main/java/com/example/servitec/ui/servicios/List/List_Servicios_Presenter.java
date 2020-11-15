@@ -22,7 +22,7 @@ public class List_Servicios_Presenter {
 
      void getData()
     {
-        view.hideBar();
+        view.showBar();
 
         Call<List<POJOServiciosGet>> response = RetroClient.getInstance().getApi().getservicios();
 

@@ -6,6 +6,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -66,9 +68,7 @@ public class View_Galery_Fragment extends Fragment implements List_Galery_View{
 
         swp = requireActivity().findViewById(R.id.swp_media);
 
-        StaggeredGridLayoutManager layoutManager=new  StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
-
-        listamedia.setLayoutManager(layoutManager);
+        initLayout();
 
         presentador = new List_Galery_Presentador(this);
 
@@ -83,6 +83,11 @@ public class View_Galery_Fragment extends Fragment implements List_Galery_View{
 
     }
 
+    private void initLayout()
+    {
+
+        listamedia.setLayoutManager(new GridLayoutManager(requireContext(),2));
+    }
     private void showToast(String mensaje)
     {
         LayoutInflater inflater = getLayoutInflater();
