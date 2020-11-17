@@ -6,6 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetroClient {
 
     private static final String BASE_URL="https://tecdies.com.mx/TECDIES_ANDROID/";
+
     private static RetroClient myClient;
     private Retrofit retrofit;
 
