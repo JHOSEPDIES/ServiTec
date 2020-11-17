@@ -1,5 +1,6 @@
 package com.example.servitec.ui.equipos.add;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,6 +20,10 @@ import android.widget.Toast;
 import com.example.servitec.R;
 import com.example.servitec.clases.Modelos.POJORespuesta;
 import com.example.servitec.API.RetroClient;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.common.BitMatrix;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -76,6 +81,7 @@ public class Add_Equipo_Fragment extends Fragment implements Add_Equipos_View{
                 if (!nombre.getText().toString().equals("") && !dependencia.getText().toString().equals("") && !modelo.getText().toString().equals("") && !marca.getText().toString().equals("") &&
                     !ns.getText().toString().equals("") && !estado.getText().toString().equals("") && !color.getText().toString().equals("") && !notas.getText().toString().equals(""))
                 {
+
                     presenter.guardarDatos(nombre.getText().toString(),dependencia.getText().toString(),modelo.getText().toString(),marca.getText().toString(),
                             ns.getText().toString(),estado.getText().toString(),color.getText().toString(),notas.getText().toString());
                 }
@@ -105,69 +111,19 @@ public class Add_Equipo_Fragment extends Fragment implements Add_Equipos_View{
     @Override
     public void onSuccess(String message)
     {
-        LayoutInflater inflater = getLayoutInflater();
-
-        View layout = inflater.inflate(R.layout.custom_toast, requireActivity().findViewById(R.id.layout_toast));
-
-        TextView txt_mensaje = layout.findViewById(R.id.txt_mensaje);
-
-        txt_mensaje.setText(message);
-
-        Toast toast = new Toast(requireActivity());
-
-        toast.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL,0,0);
-
-        toast.setDuration(Toast.LENGTH_SHORT);
-
-        toast.setView(layout);
-
-        toast.show();
-
+        showToast(message);
     }
 
     @Override
     public void onFailure(String message)
     {
-        LayoutInflater inflater = getLayoutInflater();
-
-        View layout = inflater.inflate(R.layout.custom_toast, requireActivity().findViewById(R.id.layout_toast));
-
-        TextView txt_mensaje = layout.findViewById(R.id.txt_mensaje);
-
-        txt_mensaje.setText(message);
-
-        Toast toast = new Toast(requireActivity());
-
-        toast.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL,0,0);
-
-        toast.setDuration(Toast.LENGTH_SHORT);
-
-        toast.setView(layout);
-
-        toast.show();
+        showToast(message);
     }
 
     @Override
     public void onError(String Message)
     {
-        LayoutInflater inflater = getLayoutInflater();
-
-        View layout = inflater.inflate(R.layout.custom_toast, requireActivity().findViewById(R.id.layout_toast));
-
-        TextView txt_mensaje = layout.findViewById(R.id.txt_mensaje);
-
-        txt_mensaje.setText(Message);
-
-        Toast toast = new Toast(requireActivity());
-
-        toast.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL,0,0);
-
-        toast.setDuration(Toast.LENGTH_SHORT);
-
-        toast.setView(layout);
-
-        toast.show();
-
+        showToast(Message);
     }
 
     @Override
@@ -182,6 +138,38 @@ public class Add_Equipo_Fragment extends Fragment implements Add_Equipos_View{
         notas.setText("");
     }
 
+    private void generarQR(String code)
+    {
+        MultiFormatWriter multiFormatWriter=new MultiFormatWriter();
+        try{
+            BitMatrix bitMatrix=multiFormatWriter.encode(code, BarcodeFormat.QR_CODE,250,250);
+            BarcodeEncoder barcodeEncoder=new BarcodeEncoder();
+            Bitmap bitmap=barcodeEncoder.createBitmap(bitMatrix);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    private void showToast(String message)
+    {
+        LayoutInflater inflater = getLayoutInflater();
+
+        View layout = inflater.inflate(R.layout.custom_toast, requireActivity().findViewById(R.id.layout_toast));
+
+        TextView txt_mensaje = layout.findViewById(R.id.txt_mensaje);
+
+        txt_mensaje.setText(message);
+
+        Toast toast = new Toast(requireActivity());
+
+        toast.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL,0,0);
+
+        toast.setDuration(Toast.LENGTH_SHORT);
+
+        toast.setView(layout);
+
+        toast.show();
+    }
 
 
 }

@@ -65,6 +65,6 @@ public interface serviciosTec {
 
 
     @GET("obtener_datos_graficas.php")
-    Call<List<POJOGraficas>> getData_Services_Chart();
+    Call<POJOGraficas> getData_Services_Chart();
 
 }

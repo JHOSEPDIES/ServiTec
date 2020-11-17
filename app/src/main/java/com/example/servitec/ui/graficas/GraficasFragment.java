@@ -6,10 +6,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.anychart.AnyChart;
@@ -34,9 +36,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class GraficasFragment extends Fragment {
+public class GraficasFragment extends Fragment implements Graficas_View{
 
     private ProgressBar pb_graficas;
+
+    Graficas_Presenter presenter;
 
     public GraficasFragment() {
         // Required empty public constructor
@@ -61,46 +65,21 @@ public class GraficasFragment extends Fragment {
 
         pb_graficas = requireActivity().findViewById(R.id.pb_graficas);
 
-        getChart();
+        presenter = new Graficas_Presenter(this);
+
+        presenter.getChart();
     }
 
-    private void getChart()
+
+    private void iniciarGraficas(int valores)
     {
-        Call<List<POJOGraficas>> call = RetroClient.getInstance().getApi().getData_Services_Chart();
-
-        call.enqueue(new Callback<List<POJOGraficas>>() {
-            @Override
-            public void onResponse(Call<List<POJOGraficas>> call, Response<List<POJOGraficas>> response) {
-                if (response.isSuccessful() && response.code() == 200)
-                {
-                    iniciarGraficas(response);
-                }
-                else
-                {
-                    Toast.makeText(requireActivity(), "No Existen Datos", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<POJOGraficas>> call, Throwable t) {
-
-            }
-        });
-    }
-
-    private void iniciarGraficas(Response<List<POJOGraficas>> response)
-    {
-        pb_graficas.setVisibility(View.VISIBLE);
 
         AnyChartView anyChartView = requireActivity().findViewById(R.id.graficas_generales);
         Cartesian cartesian = AnyChart.column();
 
         List<DataEntry> data = new ArrayList<>();
 
-        for (POJOGraficas elemento : response.body())
-        {
-            data.add(new ValueDataEntry("Servicios", elemento.getServicios()));
-        }
+        data.add(new ValueDataEntry("Servicios", valores));
 
         Column column = cartesian.column(data);
 
@@ -121,7 +100,57 @@ public class GraficasFragment extends Fragment {
         cartesian.yAxis(0).title("Cantidad");
         anyChartView.setChart(cartesian);
 
-        pb_graficas.setVisibility(View.INVISIBLE);
 
+    }
+
+    @Override
+    public void showBar()
+    {
+        pb_graficas.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideBar()
+    {
+        pb_graficas.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void onErrorLoad(String message)
+    {
+        showToast(message);
+    }
+
+    @Override
+    public void onFail(String message)
+    {
+        showToast(message);
+    }
+
+    @Override
+    public void getValues(int total)
+    {
+        iniciarGraficas(total);
+    }
+
+    private void showToast(String message)
+    {
+        LayoutInflater inflater = getLayoutInflater();
+
+        View layout = inflater.inflate(R.layout.custom_toast, requireActivity().findViewById(R.id.layout_toast));
+
+        TextView txt_mensaje = layout.findViewById(R.id.txt_mensaje);
+
+        txt_mensaje.setText(message);
+
+        Toast toast = new Toast(requireActivity());
+
+        toast.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL,0,0);
+
+        toast.setDuration(Toast.LENGTH_SHORT);
+
+        toast.setView(layout);
+
+        toast.show();
     }
 }
