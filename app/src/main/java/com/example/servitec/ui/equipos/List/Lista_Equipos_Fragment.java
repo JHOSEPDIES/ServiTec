@@ -41,7 +41,6 @@ public class Lista_Equipos_Fragment extends Fragment implements List_Equipos_Vie
 
     private SwipeRefreshLayout swp;
 
-
     List_Equipos_Presenter presenter;
 
     public Lista_Equipos_Fragment() {
@@ -56,7 +55,8 @@ public class Lista_Equipos_Fragment extends Fragment implements List_Equipos_Vie
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             Bundle savedInstanceState) 
+    {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_lista__equipos_, container, false);
     }
@@ -65,36 +65,50 @@ public class Lista_Equipos_Fragment extends Fragment implements List_Equipos_Vie
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
+        //swipe layout
         swp = requireActivity().findViewById(R.id.swp_datos);
 
+        //asignado el widget
         listaequipos = requireActivity().findViewById(R.id.rv_equipos);
 
+        //asignando el tipo de layout
         listaequipos.setLayoutManager(new LinearLayoutManager(requireActivity()));
 
+        //asignamos la vista, en este caso esta
         presenter = new List_Equipos_Presenter(this);
 
+        //obteniendo los datos
         presenter.getData();
 
-        swp.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
+        //buscando más datos en la opción de refrescar
+        swp.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() 
+        {
             @Override
-            public void onRefresh() {
+            public void onRefresh() 
+            {
+                //obtenemos los datos
                 presenter.getData();
             }
         });
     }
 
+    //se muestra el icono de load en el swipe down
     @Override
     public void showBar()
     {
         swp.setRefreshing(true);
     }
 
+    //oculta el icono de load
     @Override
     public void hideBar()
     {
         swp.setRefreshing(false);
     }
 
+    //muestra el toast personalizado
     @Override
     public void onErrorLoad(String Message)
     {
@@ -117,12 +131,23 @@ public class Lista_Equipos_Fragment extends Fragment implements List_Equipos_Vie
         toast.show();
     }
 
+    //obtiene los resultados de la BD y los asigna al RV
     @Override
     public void onGetResult(List<POJOEquipos> equipos)
     {
+        //le asigna el objeto equipos al adaptador y realiza toda la asignación
         adapter = new EquiposAdapter(equipos);
+
+        //Notifica a los observadores adjuntos que los datos subyacentes han sido cambiados 
+        //y que cualquier vista que refleja el conjunto de datos debe actualizarse.
         adapter.notifyDataSetChanged();
+        
+
+        //asigna al RV el adaptador que contiene la lista de equipos
         listaequipos.setAdapter(adapter);
+        
+        //asigna los resultados de la BD a la lista del POJO
         equipo = equipos;
     }
 }
+
